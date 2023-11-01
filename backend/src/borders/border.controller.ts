@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common'
-import { BorderService } from 'src/border/border.service'
+import { BorderService } from 'src/borders/border.service'
 
 @Controller('api')
 export class BorderController {

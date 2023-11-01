@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
-import { BorderModule } from './border/border.module'
-import { PizzaSizeModule } from './pizzaSize/pizzaSize.module'
-import { FlavorModule } from './flavor/flavor.module'
-import { BudModule } from './bud/bud.module'
-import { DrinkModule } from './drink/drink.module'
-import { ComboModule } from './combo/combo.module'
+import { BorderModule } from './borders/border.module'
+import { PizzaSizeModule } from './pizzaSizes/pizzaSize.module'
+import { FlavorModule } from './flavors/flavor.module'
+import { BudModule } from './buds/bud.module'
+import { DrinkModule } from './drinks/drink.module'
+import { ComboModule } from './combos/combo.module'
 
 @Module({
   imports: [BorderModule, PizzaSizeModule, FlavorModule, BudModule, DrinkModule, ComboModule],

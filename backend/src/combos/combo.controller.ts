@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common'
-import { ComboService } from 'src/combo/combo.service'
+import { ComboService } from 'src/combos/combo.service'
 
 @Controller('api')
 export class ComboController {

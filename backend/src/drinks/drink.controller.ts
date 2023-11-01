@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common'
-import { DrinkService } from 'src/drink/drink.service'
+import { DrinkService } from 'src/drinks/drink.service'
 
 @Controller('api')
 export class DrinkController {
