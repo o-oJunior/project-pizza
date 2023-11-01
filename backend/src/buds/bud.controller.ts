@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common'
-import { BudService } from 'src/bud/bud.service'
+import { BudService } from 'src/buds/bud.service'
 
 @Controller('api')
 export class BudController {
