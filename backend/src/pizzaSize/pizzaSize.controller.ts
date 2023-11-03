@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common'
-import { PizzaSizeService } from 'src/pizzaSizes/pizzaSize.service'
+import { PizzaSizeService } from 'src/pizzaSize/pizzaSize.service'
 
-@Controller('api')
+@Controller('api/pizzaSize')
 export class ControllerPizzaSize {
   constructor(private readonly pizzaSizeService: PizzaSizeService) {}
 
-  @Get('pizzaSize')
+  @Get()
   getAllPizzaSizes(): object {
     return this.pizzaSizeService.getAllPizzaSizes()
   }
