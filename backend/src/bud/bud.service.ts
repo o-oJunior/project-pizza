@@ -9,11 +9,11 @@ export class BudService {
     this.budRepository.connectDatabase()
     try {
       const response: object = await this.budRepository.getAllBuds()
-      this.budRepository.disconnectDatabase()
       return response
     } catch (error) {
-      this.budRepository.disconnectDatabase()
       return error
+    } finally {
+      this.budRepository.disconnectDatabase()
     }
   }
 }

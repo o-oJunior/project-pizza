@@ -9,11 +9,11 @@ export class BorderService {
     this.borderRepository.connectDatabase()
     try {
       const response = await this.borderRepository.getAllBorders()
-      this.borderRepository.disconnectDatabase()
       return response
     } catch (error) {
-      this.borderRepository.disconnectDatabase()
       return error
+    } finally {
+      this.borderRepository.disconnectDatabase()
     }
   }
 }

@@ -9,11 +9,11 @@ export class DrinkService {
     this.drinkRepository.connectDatabase()
     try {
       const response: object = await this.drinkRepository.getAllDrinks()
-      this.drinkRepository.disconnectDatabase()
       return response
     } catch (error) {
-      this.drinkRepository.disconnectDatabase()
       return error
+    } finally {
+      this.drinkRepository.disconnectDatabase()
     }
   }
 }

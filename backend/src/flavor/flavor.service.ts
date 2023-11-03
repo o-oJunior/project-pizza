@@ -9,11 +9,11 @@ export class FlavorService {
     this.flavorRepository.connectDatabase()
     try {
       const response: object = await this.flavorRepository.getAllFlavors()
-      this.flavorRepository.disconnectDatabase()
       return response
     } catch (error) {
-      this.flavorRepository.disconnectDatabase()
       return error
+    } finally {
+      this.flavorRepository.disconnectDatabase()
     }
   }
 }

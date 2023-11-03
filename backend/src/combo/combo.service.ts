@@ -9,11 +9,11 @@ export class ComboService {
     this.comboRepository.connectDatabase()
     try {
       const response: object = await this.comboRepository.getAllCombos()
-      this.comboRepository.disconnectDatabase()
       return response
     } catch (error) {
-      this.comboRepository.disconnectDatabase()
       return error
+    } finally {
+      this.comboRepository.disconnectDatabase()
     }
   }
 }

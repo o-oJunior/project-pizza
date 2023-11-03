@@ -9,11 +9,11 @@ export class PizzaSizeService {
     this.pizzaSizeRepository.connectDatabase()
     try {
       const response: object = await this.pizzaSizeRepository.getAllPizzaSizes()
-      this.pizzaSizeRepository.disconnectDatabase()
       return response
     } catch (error) {
-      this.pizzaSizeRepository.disconnectDatabase()
       return error
+    } finally {
+      this.pizzaSizeRepository.disconnectDatabase()
     }
   }
 }
