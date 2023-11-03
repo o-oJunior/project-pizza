@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common'
-import { BudService } from 'src/buds/bud.service'
+import { BudService } from 'src/bud/bud.service'
 
-@Controller('api')
+@Controller('api/bud')
 export class BudController {
   constructor(private readonly budService: BudService) {}
 
-  @Get('bud')
+  @Get()
   getAllBuds(): object {
     return this.budService.getAllBuds()
   }

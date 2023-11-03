@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common'
-import { DrinkService } from 'src/drinks/drink.service'
+import { DrinkService } from 'src/drink/drink.service'
 
-@Controller('api')
+@Controller('api/drink')
 export class DrinkController {
   constructor(private readonly drinkService: DrinkService) {}
 
-  @Get('drink')
+  @Get()
   getAllDrinks(): object {
     return this.drinkService.getAllDrinks()
   }

@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common'
-import { FlavorService } from 'src/flavors/flavor.service'
+import { FlavorService } from 'src/flavor/flavor.service'
 
-@Controller('api')
+@Controller('api/flavor')
 export class FlavorController {
   constructor(private readonly flavorService: FlavorService) {}
 
-  @Get('flavor')
+  @Get()
   getAllFlavors(): object {
     return this.flavorService.getAllFlavors()
   }
