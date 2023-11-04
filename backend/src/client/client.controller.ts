@@ -8,22 +8,22 @@ export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @Get()
-  getUserByID(@Query('id') id: number): object {
-    return this.clientService.getUserByID(id)
+  getClientByID(@Query('id') id: number): object {
+    return this.clientService.getClientByID(id)
   }
 
   @Post('create')
-  createUser(@Body() createClientDto: CreateClientDto): object {
-    return this.clientService.createUser(createClientDto)
+  createClient(@Body() createClientDto: CreateClientDto): object {
+    return this.clientService.createClient(createClientDto)
   }
 
   @Put('update')
-  updateUserByID(@Query('id') id: number, @Body() updateClientDto: UpdateClientDto): object {
-    return this.clientService.updateUserByID(id, updateClientDto)
+  updateClientByID(@Query('id') id: number, @Body() updateClientDto: UpdateClientDto): object {
+    return this.clientService.updateClientByID(id, updateClientDto)
   }
 
   @Delete('delete')
-  deleteUserByID(@Query('id') id: number): object {
-    return this.clientService.deleteUserByID(id)
+  deleteClientByID(@Query('id') id: number): object {
+    return this.clientService.deleteClientByID(id)
   }
 }

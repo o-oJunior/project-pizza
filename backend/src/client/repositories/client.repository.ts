@@ -4,7 +4,7 @@ import { IResults } from 'src/globals/interfaces/results'
 import { UpdateClientDto } from '../dto/updateClient.dto'
 
 export class ClientRepository extends Database {
-  async getUserByID(id: number): Promise<object> {
+  async getClientByID(id: number): Promise<object> {
     this.connectDatabase()
     try {
       const query: string = `SELECT * FROM client WHERE id = $1`
@@ -17,7 +17,7 @@ export class ClientRepository extends Database {
     }
   }
 
-  async getUserByCPF(cpf: string): Promise<object> {
+  async getClientByCPF(cpf: string): Promise<object> {
     this.connectDatabase()
     try {
       const query: string = 'SELECT * FROM client WHERE cpf = $1'
@@ -30,7 +30,7 @@ export class ClientRepository extends Database {
     }
   }
 
-  async getUserByEMAIL(email: string): Promise<object> {
+  async getClientByEMAIL(email: string): Promise<object> {
     this.connectDatabase()
     try {
       const query: string = 'SELECT * FROM client WHERE email = $1'
@@ -43,7 +43,7 @@ export class ClientRepository extends Database {
     }
   }
 
-  async createUser(createClientDto: CreateClientDto): Promise<object> {
+  async createClient(createClientDto: CreateClientDto): Promise<object> {
     this.connectDatabase()
     try {
       const insert: string = `INSERT INTO 
@@ -66,7 +66,7 @@ export class ClientRepository extends Database {
     }
   }
 
-  async updateUserByID(id: number, updateClientDto: UpdateClientDto): Promise<object> {
+  async updateClientByID(id: number, updateClientDto: UpdateClientDto): Promise<object> {
     this.connectDatabase()
     try {
       const values: string[] = Object.values(updateClientDto)
@@ -81,7 +81,7 @@ export class ClientRepository extends Database {
     }
   }
 
-  async deleteUserByID(id: number): Promise<object> {
+  async deleteClientByID(id: number): Promise<object> {
     this.connectDatabase()
     try {
       const deleted: string = 'DELETE FROM client WHERE id = $1'
