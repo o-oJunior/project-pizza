@@ -1,10 +1,7 @@
-import { Injectable } from '@nestjs/common'
 import { Client } from 'pg'
-
-@Injectable()
 export class Database {
   protected client: Client
-  protected messageStatus500: object = { message500: 'Ocorreu um erro inesperado!' }
+  statusCode500: object = { statusCode: 500, error: 'Ocorreu um erro inesperado!' }
 
   async connectDatabase() {
     try {

@@ -9,9 +9,9 @@ export class BorderService {
     this.borderRepository.connectDatabase()
     try {
       const response = await this.borderRepository.getAllBorders()
-      return response
+      return { statusCode: 200, data: response }
     } catch (error) {
-      return error
+      return this.borderRepository.statusCode500
     } finally {
       this.borderRepository.disconnectDatabase()
     }

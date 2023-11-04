@@ -9,9 +9,9 @@ export class DrinkService {
     this.drinkRepository.connectDatabase()
     try {
       const response: object = await this.drinkRepository.getAllDrinks()
-      return response
+      return { statusCode: 200, data: response }
     } catch (error) {
-      return error
+      return this.drinkRepository.statusCode500
     } finally {
       this.drinkRepository.disconnectDatabase()
     }
