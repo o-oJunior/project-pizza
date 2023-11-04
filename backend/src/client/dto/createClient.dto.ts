@@ -21,7 +21,6 @@ export class CreateClientDto {
   email: string
 
   @IsString()
-  @Length(6, 20, { message: 'A senha deve ter entre 6 a 20 caracteres!' })
   @IsNotEmpty()
   hashPassword: string
 
