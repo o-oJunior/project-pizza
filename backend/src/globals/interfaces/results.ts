@@ -1,3 +1,3 @@
-export interface Results {
+export interface IResults {
   rows: object
 }
