@@ -6,14 +6,11 @@ export class BorderService {
   constructor(private readonly borderRepository: BorderRepository) {}
 
   async getAllBorders(): Promise<object> {
-    this.borderRepository.connectDatabase()
     try {
       const response = await this.borderRepository.getAllBorders()
       return { statusCode: 200, data: response }
     } catch (error) {
       return this.borderRepository.statusCode500
-    } finally {
-      this.borderRepository.disconnectDatabase()
     }
   }
 }

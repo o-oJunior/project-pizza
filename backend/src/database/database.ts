@@ -3,7 +3,7 @@ export class Database {
   protected client: Client
   statusCode500: object = { statusCode: 500, error: 'Ocorreu um erro inesperado!' }
 
-  async connectDatabase() {
+  protected async connectDatabase() {
     try {
       this.client = new Client(process.env.DATABASE)
       await this.client.connect()
@@ -13,7 +13,7 @@ export class Database {
     }
   }
 
-  async disconnectDatabase() {
+  protected async disconnectDatabase() {
     this.client.end()
     console.log('Desconectado do banco de dados!')
   }
