@@ -5,36 +5,46 @@ import { UpdateClientDto } from '../dto/updateClient.dto'
 
 export class ClientRepository extends Database {
   async getUserByID(id: number): Promise<object> {
+    this.connectDatabase()
     try {
       const query: string = `SELECT * FROM client WHERE id = $1`
       const results: IResults = await this.client.query(query, [id])
       return results.rows
     } catch (error) {
       return this.statusCode500
+    } finally {
+      this.disconnectDatabase()
     }
   }
 
   async getUserByCPF(cpf: string): Promise<object> {
+    this.connectDatabase()
     try {
       const query: string = 'SELECT * FROM client WHERE cpf = $1'
       const results: IResults = await this.client.query(query, [cpf])
       return results.rows
     } catch (error) {
       return this.statusCode500
+    } finally {
+      this.disconnectDatabase()
     }
   }
 
   async getUserByEMAIL(email: string): Promise<object> {
+    this.connectDatabase()
     try {
       const query: string = 'SELECT * FROM client WHERE email = $1'
       const results: IResults = await this.client.query(query, [email])
       return results.rows
     } catch (error) {
       this.statusCode500
+    } finally {
+      this.disconnectDatabase()
     }
   }
 
   async createUser(createClientDto: CreateClientDto): Promise<object> {
+    this.connectDatabase()
     try {
       const insert: string = `INSERT INTO 
       client(name, cpf, phone, email, hashPassword, dateCreated, timeCreated) 
@@ -51,10 +61,13 @@ export class ClientRepository extends Database {
       return await this.client.query(insert, values)
     } catch (error) {
       return this.statusCode500
+    } finally {
+      this.disconnectDatabase()
     }
   }
 
   async updateUserByID(id: number, updateClientDto: UpdateClientDto): Promise<object> {
+    this.connectDatabase()
     try {
       const values: string[] = Object.values(updateClientDto)
       const keys: string[] = Object.keys(updateClientDto)
@@ -63,15 +76,20 @@ export class ClientRepository extends Database {
       return await this.client.query(update)
     } catch (error) {
       return this.statusCode500
+    } finally {
+      this.disconnectDatabase()
     }
   }
 
   async deleteUserByID(id: number): Promise<object> {
+    this.connectDatabase()
     try {
       const deleted: string = 'DELETE FROM client WHERE id = $1'
       return await this.client.query(deleted, [id])
     } catch (error) {
       return this.statusCode500
+    } finally {
+      this.disconnectDatabase()
     }
   }
 }

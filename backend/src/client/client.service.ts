@@ -31,7 +31,6 @@ export class ClientService {
   constructor(private readonly clientRepository: ClientRepository) {}
 
   async getUserByID(id: number): Promise<object> {
-    this.clientRepository.connectDatabase()
     try {
       const response = await this.clientRepository.getUserByID(id)
       const rows: IRows[] = Object.values(response)
@@ -56,13 +55,10 @@ export class ClientService {
       return { statusCode: 200, data: client }
     } catch (error) {
       return this.clientRepository.statusCode500
-    } finally {
-      this.clientRepository.disconnectDatabase()
     }
   }
 
   async createUser(createClientDto: CreateClientDto): Promise<object> {
-    this.clientRepository.connectDatabase()
     const date = new Date().toLocaleDateString()
     const time = new Date().toLocaleTimeString()
     createClientDto.dateCreated = date
@@ -79,13 +75,10 @@ export class ClientService {
       return { statusCode: 201, message: 'Cliente criado com sucesso!' }
     } catch (error) {
       return this.clientRepository.statusCode500
-    } finally {
-      this.clientRepository.disconnectDatabase()
     }
   }
 
   async updateUserByID(id: number, updateClientDto: UpdateClientDto): Promise<object> {
-    this.clientRepository.connectDatabase()
     try {
       const results = await this.clientRepository.getUserByID(id)
       const keys = Object.keys(updateClientDto)
@@ -105,20 +98,15 @@ export class ClientService {
       return { statusCode: 200, success: 'Cliente alterado com sucesso!' }
     } catch (error) {
       return this.clientRepository.statusCode500
-    } finally {
-      this.clientRepository.disconnectDatabase()
     }
   }
 
   async deleteUserByID(id: number): Promise<object> {
-    this.clientRepository.connectDatabase()
     try {
       await this.clientRepository.deleteUserByID(id)
       return { statusCode: 200, success: 'Cliente excluido com sucesso!' }
     } catch (error) {
       return this.clientRepository.statusCode500
-    } finally {
-      this.clientRepository.disconnectDatabase()
     }
   }
 }

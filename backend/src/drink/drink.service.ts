@@ -6,14 +6,11 @@ export class DrinkService {
   constructor(private readonly drinkRepository: DrinkRepository) {}
 
   async getAllDrinks(): Promise<object> {
-    this.drinkRepository.connectDatabase()
     try {
       const response: object = await this.drinkRepository.getAllDrinks()
       return { statusCode: 200, data: response }
     } catch (error) {
       return this.drinkRepository.statusCode500
-    } finally {
-      this.drinkRepository.disconnectDatabase()
     }
   }
 }
