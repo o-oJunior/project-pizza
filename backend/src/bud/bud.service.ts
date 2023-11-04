@@ -9,9 +9,9 @@ export class BudService {
     this.budRepository.connectDatabase()
     try {
       const response: object = await this.budRepository.getAllBuds()
-      return response
+      return { statusCode: 200, data: response }
     } catch (error) {
-      return error
+      return this.budRepository.statusCode500
     } finally {
       this.budRepository.disconnectDatabase()
     }

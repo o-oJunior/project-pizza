@@ -9,9 +9,9 @@ export class FlavorService {
     this.flavorRepository.connectDatabase()
     try {
       const response: object = await this.flavorRepository.getAllFlavors()
-      return response
+      return { statusCode: 200, data: response }
     } catch (error) {
-      return error
+      return this.flavorRepository.statusCode500
     } finally {
       this.flavorRepository.disconnectDatabase()
     }

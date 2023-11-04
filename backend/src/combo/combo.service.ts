@@ -9,9 +9,9 @@ export class ComboService {
     this.comboRepository.connectDatabase()
     try {
       const response: object = await this.comboRepository.getAllCombos()
-      return response
+      return { statusCode: 200, data: response }
     } catch (error) {
-      return error
+      return this.comboRepository.statusCode500
     } finally {
       this.comboRepository.disconnectDatabase()
     }

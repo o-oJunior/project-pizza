@@ -9,9 +9,9 @@ export class PizzaSizeService {
     this.pizzaSizeRepository.connectDatabase()
     try {
       const response: object = await this.pizzaSizeRepository.getAllPizzaSizes()
-      return response
+      return { statusCode: 200, data: response }
     } catch (error) {
-      return error
+      return this.pizzaSizeRepository.statusCode500
     } finally {
       this.pizzaSizeRepository.disconnectDatabase()
     }

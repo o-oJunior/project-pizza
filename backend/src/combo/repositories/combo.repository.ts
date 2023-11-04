@@ -1,13 +1,13 @@
 import { Database } from 'src/database/database'
-import { Results } from 'src/globals/interfaces/results'
+import { IResults } from 'src/globals/interfaces/results'
 
 export class ComboRepository extends Database {
   async getAllCombos(): Promise<object> {
     try {
-      const results: Results = await this.client.query('SELECT * FROM combo')
+      const results: IResults = await this.client.query('SELECT * FROM combo')
       return results.rows
     } catch (error) {
-      return this.messageStatus500
+      return this.statusCode500
     }
   }
 }
