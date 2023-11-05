@@ -14,12 +14,12 @@ export class AddressService {
     try {
       const response: object = await this.addressRepository.getAddressByIDClient(idClient)
       const values = Object.values(response)
-      const address = values.map((value) => {
+      const addressFormated = values.map((value) => {
         value.idClient = value.idclient
         delete value.idclient
         return value
       })
-      return { statusCode: 200, data: address }
+      return { statusCode: 200, data: addressFormated }
     } catch (error) {
       return this.addressRepository.statusCode500
     }

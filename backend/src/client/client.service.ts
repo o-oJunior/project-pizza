@@ -11,7 +11,7 @@ export class ClientService {
     try {
       const response = await this.clientRepository.getClientByID(id)
       const values = Object.values(response)
-      const client = values.map((value) => {
+      const clientFormated = values.map((value) => {
         value.hashPassword = value.hashpassword
         value.dateCreated = value.datecreated
         value.timeCreated = value.timecreated
@@ -20,10 +20,10 @@ export class ClientService {
         delete value.timecreated
         return value
       })
-      if (!client) {
+      if (!clientFormated) {
         return { statusCode: 404, error: 'Cliente não foi encontrado!' }
       }
-      return { statusCode: 200, data: client }
+      return { statusCode: 200, data: clientFormated }
     } catch (error) {
       return this.clientRepository.statusCode500
     }
