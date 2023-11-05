@@ -8,7 +8,13 @@ export class FlavorService {
   async getAllFlavors(): Promise<object> {
     try {
       const response: object = await this.flavorRepository.getAllFlavors()
-      return { statusCode: 200, data: response }
+      const values = Object.values(response)
+      const flavorsFormated = values.map((value) => {
+        value.priceAdditional = value.priceadditional
+        delete value.priceadditional
+        return value
+      })
+      return { statusCode: 200, data: flavorsFormated }
     } catch (error) {
       return this.flavorRepository.statusCode500
     }

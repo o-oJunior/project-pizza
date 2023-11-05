@@ -8,7 +8,13 @@ export class BorderService {
   async getAllBorders(): Promise<object> {
     try {
       const response = await this.borderRepository.getAllBorders()
-      return { statusCode: 200, data: response }
+      const values = Object.values(response)
+      const bordersFormated = values.map((value) => {
+        value.priceAdditional = value.priceadditional
+        delete value.priceadditional
+        return value
+      })
+      return { statusCode: 200, data: bordersFormated }
     } catch (error) {
       return this.borderRepository.statusCode500
     }

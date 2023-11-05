@@ -8,7 +8,13 @@ export class BudService {
   async getAllBuds(): Promise<object> {
     try {
       const response: object = await this.budRepository.getAllBuds()
-      return { statusCode: 200, data: response }
+      const values = Object.values(response)
+      const budsFormated = values.map((value) => {
+        value.priceAdditional = value.priceadditional
+        delete value.priceadditional
+        return value
+      })
+      return { statusCode: 200, data: budsFormated }
     } catch (error) {
       return this.budRepository.statusCode500
     }
