@@ -7,6 +7,7 @@ import { BorderModule } from './border/border.module'
 import { BudModule } from './bud/bud.module'
 import { DrinkModule } from './drink/drink.module'
 import { ComboModule } from './combo/combo.module'
+import { OrdersModule } from './orders/orders.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ComboModule } from './combo/combo.module'
     BudModule,
     DrinkModule,
     ComboModule,
+    OrdersModule,
   ],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { AddressService } from './address.service'
 import { CreateAddressDto } from './dto/createAddress.dto'
 
@@ -6,8 +6,8 @@ import { CreateAddressDto } from './dto/createAddress.dto'
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @Get()
-  getAddressByIDClient(@Query('idClient') idClient: number) {
+  @Get('idClient/:idClient')
+  getAddressByIDClient(@Param('idClient') idClient: number): object {
     return this.addressService.getAddressByIDClient(idClient)
   }
 
@@ -16,8 +16,8 @@ export class AddressController {
     return this.addressService.createAddress(createAddressDto)
   }
 
-  @Delete('delete')
-  deletedAddress(@Query('id') id: number, @Query('idClient') idClient: number) {
-    return this.addressService.deleteAddress(id, idClient)
+  @Delete('delete/:id')
+  deletedAddress(@Param('id') id: number): object {
+    return this.addressService.deleteAddress(id)
   }
 }

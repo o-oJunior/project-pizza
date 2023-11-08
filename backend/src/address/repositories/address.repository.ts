@@ -39,12 +39,11 @@ export class AddressRepository extends Database {
     }
   }
 
-  async deleteAddress(id: number, idClient: number): Promise<object> {
+  async deleteAddress(id: number): Promise<object> {
     this.connectDatabase()
     try {
-      const deletedAddress: string = 'DELETE FROM address WHERE id = $1 and idClient = $2'
-      const values: number[] = [id, idClient]
-      return await this.client.query(deletedAddress, values)
+      const deletedAddress: string = 'DELETE FROM address WHERE id = $1'
+      return await this.client.query(deletedAddress, [id])
     } catch (error) {
       return this.statusCode500
     } finally {

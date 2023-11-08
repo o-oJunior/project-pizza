@@ -10,7 +10,7 @@ export class AddressService {
     private readonly clientRepository: ClientRepository
   ) {}
 
-  async getAddressByIDClient(idClient: number) {
+  async getAddressByIDClient(idClient: number): Promise<object> {
     try {
       const response: object = await this.addressRepository.getAddressByIDClient(idClient)
       const values = Object.values(response)
@@ -19,6 +19,9 @@ export class AddressService {
         delete value.idclient
         return value
       })
+      if (addressFormated.length === 0) {
+        return { statusCode: 200, data: 'Nenhum endereço cadastrado!' }
+      }
       return { statusCode: 200, data: addressFormated }
     } catch (error) {
       return this.addressRepository.statusCode500
@@ -38,9 +41,9 @@ export class AddressService {
     }
   }
 
-  async deleteAddress(id: number, idClient: number) {
+  async deleteAddress(id: number): Promise<object> {
     try {
-      await this.addressRepository.deleteAddress(id, idClient)
+      await this.addressRepository.deleteAddress(id)
       return { statusCode: 200, message: 'Endereço excluido com sucesso!' }
     } catch (error) {
       return this.addressRepository.statusCode500

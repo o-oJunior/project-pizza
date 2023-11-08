@@ -65,7 +65,10 @@ export class ClientService {
       if (!checkUser) {
         return { statusCode: 404, error: 'Cliente não encontrado!' }
       }
-      await this.clientRepository.updateClientByID(id, updateClientDto)
+      const response: any = await this.clientRepository.updateClientByID(id, updateClientDto)
+      if (response.statusCode === 500) {
+        return this.clientRepository.statusCode500
+      }
       return { statusCode: 200, message: 'Cliente alterado com sucesso!' }
     } catch (error) {
       return this.clientRepository.statusCode500
