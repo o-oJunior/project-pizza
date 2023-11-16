@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 80px 10px 40px 10px;
+
+  .listContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .cardComponent {
+    border: 1px solid violet;
+    flex: 0 1 calc(33.333% - 80px);
+  }
+}

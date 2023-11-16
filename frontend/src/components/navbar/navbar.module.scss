@@ -8,7 +8,7 @@ $background-color-terciary: #f2f2f2;
 // screens
 $screen-tablet: 768px;
 
-.navbar-container {
+.navbarContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -25,20 +25,20 @@ $screen-tablet: 768px;
     padding: 10px;
     font-weight: bold;
     text-shadow: 0px 0px 3px #000;
-    .color-green {
+    .colorGreen {
       color: $color-green;
     }
 
-    .color-white {
+    .colorWhite {
       color: $color-white;
     }
 
-    .color-red {
+    .colorRed {
       color: $color-red;
     }
   }
 
-  .toggle-menu {
+  .toggleMenu {
     display: none;
     background-color: $color-green;
     border-radius: 6px;
@@ -63,7 +63,7 @@ $screen-tablet: 768px;
     justify-content: space-between;
   }
 
-  .menu-mobile {
+  .menuMobile {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -97,7 +97,7 @@ $screen-tablet: 768px;
     cursor: pointer;
   }
 
-  .btn-container {
+  .btnContainer {
     display: flex;
     gap: 10px;
     font-size: 16px;
@@ -107,25 +107,25 @@ $screen-tablet: 768px;
     }
   }
 
-  .btn-sign-in {
+  .btnSignIn {
     background-color: $color-green;
     color: $color-white;
     padding: 10px;
     border-radius: 6px;
   }
 
-  .btn-sign-in:hover {
+  .btnSignIn:hover {
     background-color: #03aa54;
   }
 
-  .btn-sign-up {
+  .btnSignUp {
     color: $color-red;
     border: 1px solid $color-red;
     padding: 10px;
     border-radius: 6px;
   }
 
-  .btn-sign-up:hover {
+  .btnSignUp:hover {
     transition: ease-in-out 0.2s;
     background-color: $color-red;
     color: $color-white;
@@ -141,12 +141,12 @@ $screen-tablet: 768px;
       padding: 20px;
     }
 
-    .btn-container {
+    .btnContainer {
       flex-direction: column-reverse;
       padding: 15px;
     }
 
-    .toggle-menu {
+    .toggleMenu {
       display: flex;
     }
   }

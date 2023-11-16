@@ -1,0 +1,35 @@
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+  }
+
+  .textGroup {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 0px 0px 15px;
+    gap: 15px;
+  }
+
+  .size {
+    font-size: 15px;
+    color: #2f2f2f;
+  }
+
+  .slice {
+    color: #b2b2b2;
+    font-size: 16px;
+    margin: 0px 0px 0px 5px;
+  }
+
+  .price {
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
