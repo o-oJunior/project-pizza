@@ -1,0 +1,33 @@
+.pizzaContainer {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px 10px;
+    border-bottom: 1px solid #dedede;
+  }
+
+  .listContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    margin: 20px 10px;
+    gap: 10px;
+  }
+
+  .cardComponent {
+    border: 1px solid #dedede;
+    border-radius: 10px;
+    flex: 1 1 30%;
+    min-width: 300px;
+    max-width: 500px;
+  }
+
+  .cardComponent:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 8px #c9c9c9;
+  }
+}
