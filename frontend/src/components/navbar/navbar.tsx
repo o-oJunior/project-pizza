@@ -1,45 +1,45 @@
-'use client'
-import React from 'react'
-import './navbar.scss'
+import styles from './navbar.module.scss'
 
 const Navbar = () => {
   const showMenuMobile = () => {
     const menu = document.getElementById('menu')
-    menu!.className = menu?.className === 'menu' ? 'menu-mobile' : 'menu'
+    menu!.className = menu?.className === styles.menu ? styles.menuMobile : styles.menu
   }
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      const menu = document.getElementById('menu')
-      menu!.className = 'menu'
-    }
-  })
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        const menu = document.getElementById('menu')
+        menu!.className = styles.menu
+      }
+    })
+  }
   return (
-    <nav className="navbar-container">
-      <div className="title">
-        <span className="color-green">Piz</span>
-        <span className="color-white">za</span>
-        <span className="color-red">ria</span>
+    <nav className={styles.navbarContainer}>
+      <div className={styles.title}>
+        <span className={styles.colorGreen}>Piz</span>
+        <span className={styles.colorWhite}>za</span>
+        <span className={styles.colorRed}>ria</span>
       </div>
 
-      <div className="toggle-menu">
+      <div className={styles.toggleMenu}>
         <button onClick={showMenuMobile}>
           <i className="bi bi-list"></i>
         </button>
       </div>
 
-      <div id="menu" className="menu">
+      <div id="menu" className={styles.menu}>
         <ul>
           <li>Pizzas</li>
           <li>Bebidas</li>
           <li>Combos</li>
         </ul>
 
-        <div className="btn-container">
-          <a href="#" className="btn-sign-up">
+        <div className={styles.btnContainer}>
+          <a href="#" className={styles.btnSignUp}>
             Criar conta
           </a>
-          <a href="#" className="btn-sign-in">
+          <a href="#" className={styles.btnSignIn}>
             Entrar
           </a>
         </div>
