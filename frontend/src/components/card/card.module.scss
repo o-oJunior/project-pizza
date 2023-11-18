@@ -14,18 +14,29 @@
     display: flex;
     flex-direction: column;
     margin: 0px 0px 0px 15px;
-    gap: 15px;
+    gap: 10px;
   }
 
-  .size {
-    font-size: 15px;
+  .textInfo {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px;
+    font-size: 16px;
+  }
+
+  .size,
+  .name {
     color: #2f2f2f;
   }
 
   .slice {
     color: #b2b2b2;
-    font-size: 16px;
-    margin: 0px 0px 0px 5px;
+  }
+
+  .description {
+    font-size: 13px;
+    color: #b2b2b2;
   }
 
   .price {
