@@ -1,5 +1,6 @@
-export default async function getPizzaSize() {
-  const response: Response = await fetch('http://localhost:8080/api/pizzaSize')
+export async function getPizzaSize(): Promise<object[]> {
+  const URL_API = process.env.URL_API
+  const response: Response = await fetch(`${URL_API}/pizzaSize`)
   const results = await response.json()
   return results.data
 }
