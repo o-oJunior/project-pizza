@@ -13,4 +13,16 @@ export class DrinkRepository extends Database {
       this.disconnectDatabase()
     }
   }
+
+  async getDrinkByType(type: string): Promise<object> {
+    this.connectDatabase()
+    try {
+      const results: IResults = await this.client.query('SELECT * FROM drink WHERE type = $1', [type])
+      return results.rows
+    } catch (error) {
+      return this.statusCode500
+    } finally {
+      this.disconnectDatabase()
+    }
+  }
 }

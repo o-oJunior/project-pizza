@@ -13,4 +13,13 @@ export class DrinkService {
       return this.drinkRepository.statusCode500
     }
   }
+
+  async getDrinkByType(type: string) {
+    try {
+      const response: object = await this.drinkRepository.getDrinkByType(type)
+      return { statusCode: 200, data: response }
+    } catch (error) {
+      return this.drinkRepository.statusCode500
+    }
+  }
 }
