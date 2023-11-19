@@ -108,6 +108,13 @@ $screen-tablet: 768px;
     color: inherit;
   }
 
+  button {
+    background: transparent;
+    font-size: inherit;
+    color: inherit;
+    cursor: inherit;
+  }
+
   .btnSignIn {
     background-color: $color-green;
     color: $color-white;
