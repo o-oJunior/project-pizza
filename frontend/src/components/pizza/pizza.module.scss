@@ -30,4 +30,10 @@
     cursor: pointer;
     box-shadow: 1px 1px 8px #c9c9c9;
   }
+
+  @media screen and (max-width: 768px) {
+    .title {
+      text-align: center;
+    }
+  }
 }
