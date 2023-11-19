@@ -38,19 +38,13 @@ const Navbar = () => {
       <div id="menu" className={styles.menu}>
         <ul>
           <li>
-            <a href="javascript:void(0);" onClick={() => scrollToSection('combos')}>
-              Combos
-            </a>
+            <button onClick={() => scrollToSection('combos')}>Combos</button>
           </li>
           <li>
-            <a href="javascript:void(0);" onClick={() => scrollToSection('pizzas')}>
-              Pizzas
-            </a>
+            <button onClick={() => scrollToSection('pizzas')}>Pizzas</button>
           </li>
           <li>
-            <a href="javascript:void(0);" onClick={() => scrollToSection('bebidas')}>
-              Bebidas
-            </a>
+            <button onClick={() => scrollToSection('bebidas')}>Bebidas</button>
           </li>
         </ul>
 
