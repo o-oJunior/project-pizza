@@ -1,6 +1,11 @@
-.comboContainer {
+.drinkContainer {
   display: flex;
   flex-direction: column;
+
+  .groupContainer {
+    display: flex;
+    flex-direction: column;
+  }
 
   .title {
     font-size: 20px;
@@ -9,12 +14,18 @@
     border-bottom: 1px solid #dedede;
   }
 
+  .subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 30px;
+  }
+
   .listContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     flex-direction: row;
-    margin: 20px 10px;
+    margin: 0px 10px;
     gap: 10px;
   }
 
@@ -33,6 +44,9 @@
 
   @media screen and (max-width: 768px) {
     .title {
+      text-align: center;
+    }
+    .subtitle {
       text-align: center;
     }
   }

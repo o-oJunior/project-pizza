@@ -1,15 +1,14 @@
 import Card from '../card/card'
 import styles from './combo.module.scss'
 
-export default function Combo({ combo }: any) {
-  console.log(combo)
+export default function Combo({ combos }: any) {
   return (
     <>
-      {combo && (
-        <div className={styles.comboContainer}>
+      {combos && (
+        <section id="combos" className={styles.comboContainer}>
           <span className={styles.title}>Combos</span>
           <div className={styles.listContainer}>
-            {combo.map((combo: any) => {
+            {combos.map((combo: any) => {
               return (
                 <div className={styles.cardComponent} key={combo.id}>
                   <Card combo={combo} />
@@ -17,7 +16,7 @@ export default function Combo({ combo }: any) {
               )
             })}
           </div>
-        </div>
+        </section>
       )}
     </>
   )

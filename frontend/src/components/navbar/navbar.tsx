@@ -6,6 +6,13 @@ const Navbar = () => {
     menu!.className = menu?.className === styles.menu ? styles.menuMobile : styles.menu
   }
 
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', () => {
       if (window.innerWidth > 768) {
@@ -30,9 +37,21 @@ const Navbar = () => {
 
       <div id="menu" className={styles.menu}>
         <ul>
-          <li>Pizzas</li>
-          <li>Bebidas</li>
-          <li>Combos</li>
+          <li>
+            <a href="javascript:void(0);" onClick={() => scrollToSection('combos')}>
+              Combos
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" onClick={() => scrollToSection('pizzas')}>
+              Pizzas
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" onClick={() => scrollToSection('bebidas')}>
+              Bebidas
+            </a>
+          </li>
         </ul>
 
         <div className={styles.btnContainer}>

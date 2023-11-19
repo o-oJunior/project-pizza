@@ -5,7 +5,7 @@ export default function Pizza({ pizzas }: any) {
   return (
     <>
       {pizzas && (
-        <div className={styles.pizzaContainer}>
+        <section id="pizzas" className={styles.pizzaContainer}>
           <span className={styles.title}>Pizzas</span>
           <div className={styles.listContainer}>
             {pizzas.map((pizza: any) => {
@@ -16,7 +16,7 @@ export default function Pizza({ pizzas }: any) {
               )
             })}
           </div>
-        </div>
+        </section>
       )}
     </>
   )
