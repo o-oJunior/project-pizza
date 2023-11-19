@@ -2,5 +2,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 30px 40px 30px;
+  padding: 80px 30px;
+}
+
+@media screen and (max-width: 768px) {
+  .comboContainer {
+    .title {
+      text-align: center;
+    }
+  }
 }
