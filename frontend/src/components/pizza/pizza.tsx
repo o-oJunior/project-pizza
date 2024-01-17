@@ -1,7 +1,12 @@
 import Card from '../card/card'
 import styles from './pizza.module.scss'
 
-export default function Pizza({ pizzas }: any) {
+type Pizza = {
+  pizzas: object[]
+  open: (item: object) => {}
+}
+
+export default function Pizza({ pizzas, open }: Pizza) {
   return (
     <>
       {pizzas && (
@@ -10,7 +15,7 @@ export default function Pizza({ pizzas }: any) {
           <div className={styles.listContainer}>
             {pizzas.map((pizza: any) => {
               return (
-                <div className={styles.cardComponent} key={pizza.id}>
+                <div className={styles.cardComponent} key={pizza.id} onClick={() => open(pizza)}>
                   <Card pizza={pizza} />
                 </div>
               )
