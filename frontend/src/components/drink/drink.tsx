@@ -1,7 +1,13 @@
 import Card from '../card/card'
 import styles from './drink.module.scss'
 
-export default function Drink({ sodas, juices }: any) {
+type Drink = {
+  sodas: object[]
+  juices: object[]
+  open: (item: object) => {}
+}
+
+export default function Drink({ sodas, juices, open }: Drink) {
   return (
     <>
       <section id="bebidas" className={styles.drinkContainer}>
@@ -12,7 +18,7 @@ export default function Drink({ sodas, juices }: any) {
             <div className={styles.listContainer}>
               {sodas.map((soda: any) => {
                 return (
-                  <div className={styles.cardComponent} key={soda.id}>
+                  <div className={styles.cardComponent} key={soda.id} onClick={() => open(soda)}>
                     <Card drink={soda} />
                   </div>
                 )
@@ -26,7 +32,7 @@ export default function Drink({ sodas, juices }: any) {
             <div className={styles.listContainer}>
               {juices.map((juice: any) => {
                 return (
-                  <div className={styles.cardComponent} key={juice.id}>
+                  <div className={styles.cardComponent} key={juice.id} onClick={() => open(juice)}>
                     <Card drink={juice} />
                   </div>
                 )
