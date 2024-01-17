@@ -29,6 +29,7 @@
   .cardComponent:hover {
     cursor: pointer;
     box-shadow: 1px 1px 8px #c9c9c9;
+    transition: ease-in-out 0.2s;
   }
 
   @media screen and (max-width: 768px) {

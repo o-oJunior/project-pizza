@@ -1,7 +1,12 @@
 import Card from '../card/card'
 import styles from './combo.module.scss'
 
-export default function Combo({ combos }: any) {
+type Combo = {
+  combos: object[]
+  open: (item: object) => {}
+}
+
+export default function Combo({ combos, open }: Combo) {
   return (
     <>
       {combos && (
@@ -10,8 +15,8 @@ export default function Combo({ combos }: any) {
           <div className={styles.listContainer}>
             {combos.map((combo: any) => {
               return (
-                <div className={styles.cardComponent} key={combo.id}>
-                  <Card combo={combo} />
+                <div className={styles.cardComponent} key={combo.id} onClick={() => open(combo)}>
+                  <Card pizza={combo} />
                 </div>
               )
             })}
