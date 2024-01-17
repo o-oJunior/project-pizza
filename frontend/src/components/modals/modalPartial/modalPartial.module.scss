@@ -1,0 +1,153 @@
+.modalPartial {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  padding: 20px;
+  background-color: rgba(#000, 0.4);
+
+  .input {
+    padding: 10px;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+  }
+
+  .input:focus {
+    outline: #c9c9c9 solid 1px;
+  }
+
+  .modalPartialContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #dedede;
+    overflow: auto;
+    border-radius: 20px;
+    min-width: 60%;
+  }
+
+  .search {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px 0px 0px;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .btnCloseModalPartial {
+    background-color: #fff;
+    position: absolute;
+  }
+
+  .btnCloseModalPartial i {
+    font-size: 25px;
+  }
+
+  .btnCloseModalPartial i:hover {
+    cursor: pointer;
+  }
+
+  .listSelectedFlavors {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    gap: 10px;
+    background-color: #fff;
+  }
+
+  .listSelectedFlavors .textFlavors {
+    font-weight: bold;
+    padding: 10px;
+  }
+
+  .listSelectedFlavors .textNone {
+    color: #afaeae;
+    font-weight: bold;
+    padding: 10px;
+  }
+
+  .listSelectedFlavors ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 15px;
+  }
+
+  .listSelectedFlavors ul li {
+    display: flex;
+    background-color: #dedede;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .listSelectedFlavors ul li:hover {
+    background-color: #c9c9c9;
+    cursor: pointer;
+  }
+
+  .listContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    overflow: auto;
+    height: 80%;
+
+    .listContent {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border: 1px solid #dedede;
+      border-radius: 10px;
+      padding: 10px;
+
+      span {
+        font-size: 16px;
+      }
+
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 6px;
+      }
+
+      .price {
+        font-size: 15px;
+        font-weight: bold;
+        color: #009246;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .ingredients {
+          font-size: 14px;
+          color: #c9c9c9;
+        }
+      }
+    }
+
+    .listContent:hover {
+      cursor: pointer;
+      box-shadow: 1px 1px 8px #c9c9c9;
+    }
+  }
+
+  .listContainer::-webkit-scrollbar {
+    width: 4px;
+    background-color: #c9c9c9;
+  }
+
+  .listContainer::-webkit-scrollbar-thumb {
+    background-color: #686868;
+  }
+}

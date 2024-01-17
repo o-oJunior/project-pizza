@@ -1,0 +1,388 @@
+.containerModal {
+  display: flex;
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .title {
+    font-weight: bold;
+  }
+
+  .btnClose i {
+    position: absolute;
+    font-size: 25px;
+    padding: 20px;
+  }
+
+  .btnClose i:hover {
+    cursor: pointer;
+  }
+
+  .contentModal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    height: 88%;
+    overflow: auto;
+    padding: 20px 20px 10px 20px;
+    gap: 20px;
+  }
+
+  .contentForm {
+    display: flex;
+    flex: 2;
+    min-width: 400px;
+    justify-content: center;
+  }
+
+  .groupContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .groupContent {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .text {
+      font-size: 18px;
+    }
+  }
+
+  .btnFlavors {
+    padding: 10px;
+    border: 1px solid #c9c9c9;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+  }
+
+  .btnFlavors:hover {
+    cursor: pointer;
+    background-color: #dedede;
+  }
+
+  .infoProduct {
+    display: flex;
+    flex: 1;
+    min-width: 400px;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 10px 10px 20px;
+    border: 1px solid #c9c9c9;
+    border-radius: 20px;
+    gap: 10px;
+
+    .description {
+      font-size: 13px;
+      color: #b2b2b2;
+    }
+
+    .imageProduct {
+      width: 80px;
+      height: 80px;
+    }
+
+    .contentFlavor {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .listContainerFlavor {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .listContentFlavor {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 5px;
+      border-bottom: 1px solid #dedede;
+      align-items: center;
+    }
+
+    .listContentFlavor img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .listContentFlavor:hover {
+      cursor: pointer;
+      box-shadow: 1px 1px 6px #c9c9c9;
+      transition: ease-in-out 0.2s;
+    }
+
+    .infoGroup {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+
+    .infoFlavor {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .flavorName {
+      font-size: 14px;
+    }
+
+    .ingredientsFlavor {
+      font-size: 12px;
+      color: #c9c9c9;
+    }
+  }
+
+  .complements {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .groupSoda {
+    display: flex;
+    gap: 5px;
+  }
+
+  .purchase {
+    display: flex;
+    flex: 1;
+    position: fixed;
+    justify-content: flex-end;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    padding: 10px;
+    background-color: #fff;
+    border-top: 1px solid #c9c9c9;
+    gap: 10px;
+
+    .btnPurchase {
+      padding: 16px;
+      background-color: #ce2b37;
+      color: #fff;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btnPurchase:hover {
+      background-color: #e42e3a;
+    }
+  }
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    .btnQuantity {
+      background-color: #dedede;
+      font-size: 20px;
+      padding: 10px;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .btnQuantity:hover {
+      background-color: #c9c9c9;
+    }
+
+    span {
+      text-align: center;
+      width: 50px;
+      padding: 10px;
+      border: 1px solid #dedede;
+    }
+  }
+}
+
+// .modalPartial {
+//   display: flex;
+//   justify-content: center;
+//   width: 100vw;
+//   height: 100vh;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+//   position: fixed;
+//   padding: 20px;
+//   background-color: rgba(#000, 0.4);
+
+//   .input {
+//     padding: 10px;
+//     border: 1px solid #c9c9c9;
+//     border-radius: 10px;
+//   }
+
+//   .input:focus {
+//     outline: #c9c9c9 solid 1px;
+//   }
+
+//   .modalPartialContent {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+//     padding: 10px;
+//     background-color: #fff;
+//     border: 1px solid #dedede;
+//     overflow: auto;
+//     border-radius: 20px;
+//     min-width: 60%;
+//   }
+
+//   .search {
+//     display: flex;
+//     flex-direction: column;
+//     margin: 20px 0px 0px 0px;
+//     gap: 10px;
+//     text-align: center;
+//   }
+
+//   .btnCloseModalPartial {
+//     background-color: #fff;
+//     position: absolute;
+//   }
+
+//   .btnCloseModalPartial i {
+//     font-size: 25px;
+//   }
+
+//   .btnCloseModalPartial i:hover {
+//     cursor: pointer;
+//   }
+
+//   .listSelectedFlavors {
+//     display: flex;
+//     flex-direction: row;
+//     padding: 5px;
+//     gap: 10px;
+//     background-color: #fff;
+//   }
+
+//   .listSelectedFlavors .textFlavors {
+//     font-weight: bold;
+//     padding: 10px;
+//   }
+
+//   .listSelectedFlavors .textNone {
+//     color: #afaeae;
+//     font-weight: bold;
+//     padding: 10px;
+//   }
+
+//   .listSelectedFlavors ul {
+//     display: flex;
+//     flex-direction: row;
+//     list-style: none;
+//     gap: 15px;
+//   }
+
+//   .listSelectedFlavors ul li {
+//     display: flex;
+//     background-color: #dedede;
+//     padding: 10px;
+//     gap: 10px;
+//   }
+
+//   .listSelectedFlavors ul li:hover {
+//     background-color: #c9c9c9;
+//     cursor: pointer;
+//   }
+// }
+
+// .listContainer {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+//   padding: 10px;
+//   overflow: auto;
+//   height: 80%;
+
+//   .listContent {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     border: 1px solid #dedede;
+//     border-radius: 10px;
+//     padding: 10px;
+
+//     span {
+//       font-size: 16px;
+//     }
+
+//     img {
+//       width: 80px;
+//       height: 80px;
+//       border-radius: 6px;
+//     }
+
+//     .price {
+//       font-size: 15px;
+//       font-weight: bold;
+//       color: #009246;
+//     }
+
+//     .info {
+//       display: flex;
+//       flex-direction: column;
+//       gap: 8px;
+
+//       .ingredients {
+//         font-size: 14px;
+//         color: #c9c9c9;
+//       }
+//     }
+//   }
+
+//   .listContent:hover {
+//     cursor: pointer;
+//     box-shadow: 1px 1px 8px #c9c9c9;
+//   }
+// }
+
+// .listContainer::-webkit-scrollbar {
+//   width: 4px;
+//   background-color: #c9c9c9;
+// }
+
+// .listContainer::-webkit-scrollbar-thumb {
+//   background-color: #686868;
+// }
+
+@media (width < 450px) {
+  .containerModal {
+    .contentModal {
+      margin: 40px 0px 0px 0px;
+      min-width: 250px;
+    }
+
+    .infoProduct {
+      min-width: 250px;
+    }
+  }
+}
+
+@media (height < 500px) {
+  .containerModal {
+    .contentModal {
+      height: 100%;
+      padding: 20px 20px 90px 20px;
+    }
+  }
+}
