@@ -21,6 +21,7 @@ const Navbar = () => {
       }
     })
   }
+
   return (
     <nav className={styles.navbarContainer}>
       <div className={styles.title}>
@@ -37,24 +38,20 @@ const Navbar = () => {
 
       <div id="menu" className={styles.menu}>
         <ul>
-          <li>
-            <button onClick={() => scrollToSection('combos')}>Combos</button>
+          <li onClick={() => scrollToSection('combos')}>
+            <button>Combos</button>
           </li>
-          <li>
-            <button onClick={() => scrollToSection('pizzas')}>Pizzas</button>
+          <li onClick={() => scrollToSection('pizzas')}>
+            <button>Pizzas</button>
           </li>
-          <li>
-            <button onClick={() => scrollToSection('bebidas')}>Bebidas</button>
+          <li onClick={() => scrollToSection('bebidas')}>
+            <button>Bebidas</button>
           </li>
         </ul>
 
         <div className={styles.btnContainer}>
-          <a href="#" className={styles.btnSignUp}>
-            Criar conta
-          </a>
-          <a href="#" className={styles.btnSignIn}>
-            Entrar
-          </a>
+          <button className={styles.btnSignUp}>Criar conta</button>
+          <button className={styles.btnSignIn}>Entrar</button>
         </div>
       </div>
     </nav>
