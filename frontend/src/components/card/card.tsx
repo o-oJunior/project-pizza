@@ -1,62 +1,38 @@
+import { IItem } from '@/interfaces/item'
 import styles from './card.module.scss'
 
 type Props = {
-  pizza?: Pizza
-  drink?: Drink
+  item: IItem
 }
 
-type Pizza = {
-  image: string
-  name: string
-  price: number
-  slice: number
-  description: string
-}
-
-type Drink = {
-  name: string
-  image: string
-  price: number
-  liter: number
-}
-
-const Card = ({ pizza, drink }: Props) => {
-  if (pizza) {
-    return (
-      <article className={styles.cardContainer}>
-        <img src={pizza.image} alt="imagem" />
-        <div className={styles.textGroup}>
+const Card = ({ item }: Props) => {
+  return (
+    <article className={styles.cardContainer}>
+      <img src={item.image} alt="imagem" />
+      <div className={styles.textGroup}>
+        {item.slice && item.name ? (
           <div className={styles.textInfo}>
-            <span className={styles.size}>{pizza.name}</span>
-            {pizza.slice && <span className={styles.slice}>({pizza.slice} Fatias)</span>}
+            <span className={styles.size}>{item.name}</span>
+            {item.slice && <span className={styles.slice}>({item.slice} Fatias)</span>}
           </div>
-          <span className={styles.description}>{pizza.description}</span>
-          <span className={styles.price}>
-            A partir de: {pizza.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-          </span>
-        </div>
-      </article>
-    )
-  }
-
-  if (drink) {
-    return (
-      <article className={styles.cardContainer}>
-        <img src={drink.image} alt="imagem" />
-        <div className={styles.textGroup}>
-          <span className={styles.name}>{drink.name}</span>
+        ) : (
+          <span className={styles.name}>{item.name}</span>
+        )}
+        {item.liter && (
           <span className={styles.liter}>
-            {drink.liter < 1.0
-              ? `${drink.liter.toFixed(3).toString().replace('0.', '')}mL`
-              : `${drink.liter.toString().replace('.', ',')}L`}
+            {item.liter < 1.0
+              ? `${item.liter.toFixed(3).toString().replace('0.', '')}mL`
+              : `${item.liter.toString().replace('.', ',')}L`}
           </span>
-          <span className={styles.price}>
-            {drink.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-          </span>
-        </div>
-      </article>
-    )
-  }
+        )}
+        {item.description && <span className={styles.description}>{item.description}</span>}
+        <span className={styles.price}>
+          {item.description && 'A partir de: '}
+          {Object(item!.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+        </span>
+      </div>
+    </article>
+  )
 }
 
 export default Card
