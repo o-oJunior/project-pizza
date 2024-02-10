@@ -1,12 +1,23 @@
-.comboContainer {
+.itemContainer {
   display: flex;
   flex-direction: column;
+
+  .groupContainer {
+    display: flex;
+    flex-direction: column;
+  }
 
   .title {
     font-size: 20px;
     font-weight: bold;
     padding: 20px 10px;
     border-bottom: 1px solid #dedede;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 30px;
   }
 
   .listContainer {
@@ -33,7 +44,8 @@
   }
 
   @media screen and (max-width: 768px) {
-    .title {
+    .title,
+    .subtitle {
       text-align: center;
     }
   }

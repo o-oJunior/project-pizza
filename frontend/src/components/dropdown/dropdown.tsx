@@ -1,11 +1,12 @@
 import styles from './dropdown.module.scss'
+import { IItem } from '@/interfaces/item'
 
 type Props = {
   items: object[]
-  select: (item: object) => {}
+  select: (item: IItem) => void
 }
 
-export default function Dropdown({ items, select }: Props) {
+const Dropdown = ({ items, select }: Props) => {
   return (
     <div className={styles.dropdown}>
       <button className={styles.dropdownBtn}>Selecione...</button>
@@ -33,3 +34,5 @@ export default function Dropdown({ items, select }: Props) {
     </div>
   )
 }
+
+export default Dropdown
