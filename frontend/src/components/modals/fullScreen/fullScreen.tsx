@@ -1,64 +1,77 @@
 import { ISelected } from '@/interfaces/selected'
 import Dropdown from '../../dropdown/dropdown'
-import styles from './modalFullScreen.module.scss'
+import styles from './fullScreen.module.scss'
+import { IItem } from '@/interfaces/item'
+import { IData } from '@/interfaces/data'
 
-type PropsFullScreen = {
-  openModalFull: (event: boolean) => {}
-  openModalPartial: (event: boolean) => {}
-  select: (item: object, type: 'border' | 'bud' | 'soda') => {}
-  remove: (index: number) => {}
-  onChangeQuantity: (quantity: number) => {}
-  item: any
-  type: string
-  borders: object[]
-  buds: object[]
-  sodas: object[]
+type TPropsFullScreen = {
+  openModalFull: (event: boolean) => void
+  openModalListProducts: (event: boolean) => void
+  select: (item: IItem, type: 'border' | 'bud' | 'soda') => void
+  remove: (index: number) => void
+  onChangeQuantity: (quantity: number) => void
+  item: IItem
+  data: IData
   selectedItem: ISelected
   total: number
   quantity: number
+  type: string
 }
 
-export default function ModalFullScreen({
+const ModalFullScreen = ({
   openModalFull,
-  openModalPartial,
+  openModalListProducts,
   select,
   remove,
   onChangeQuantity,
   item,
-  type,
-  borders,
-  buds,
-  sodas,
+  data,
   selectedItem,
   total,
   quantity,
-}: PropsFullScreen) {
+  type,
+}: TPropsFullScreen) => {
+  const filterSodas = data.sodas.filter((soda) => Object(soda.liter) >= 1)
+
   return (
-    <div className={styles.containerModal}>
+    <div className={styles.modalContainer}>
       <div className={styles.btnClose} onClick={() => openModalFull(false)}>
         <i className="bi bi-x-circle-fill"></i>
       </div>
-      <div className={styles.contentModal}>
-        <div className={styles.contentForm}>
+      <div className={styles.modalContent}>
+        <div className={styles.formContent}>
           <div className={styles.groupContainer}>
-            <div className={styles.groupContent}>
-              <span className={styles.text}>Escolha até 3 sabores</span>
-              <button className={styles.btnFlavors} onClick={() => openModalPartial(true)}>
-                Escolher sabores
-              </button>
-            </div>
-            <div className={styles.groupContent}>
-              <span className={styles.text}>Borda</span>
-              <Dropdown select={(item: object): any => select(item, 'border')} items={borders} />
-            </div>
-            <div className={styles.groupContent}>
-              <span className={styles.text}>Broto</span>
-              <Dropdown select={(item: object): any => select(item, 'bud')} items={buds} />
-            </div>
-            <div className={styles.groupContent}>
-              <span className={styles.text}>Refrigerante</span>
-              <Dropdown select={(item: object): any => select(item, 'soda')} items={sodas} />
-            </div>
+            {type != 'drink' && (
+              <div className={styles.groupContent}>
+                {(Object(item.slice) >= 9 || type === 'combo') && (
+                  <span className={styles.text}>Escolha até 3 sabores</span>
+                )}
+                {Object(item.slice) == 6 && <span className={styles.text}>Escolha até 2 sabores</span>}
+                {Object(item.slice) <= 4 && <span className={styles.text}>Escolha 1 sabor</span>}
+                <button className={styles.btnFlavors} onClick={() => openModalListProducts(true)}>
+                  {Object(item.slice) <= 4 ? 'Escolher sabor' : 'Escolher sabores'}
+                </button>
+              </div>
+            )}
+            {Object(item.slice) >= 4 ||
+              (type === 'combo' && (
+                <div className={styles.groupContent}>
+                  <span className={styles.text}>Borda</span>
+                  <Dropdown select={(item: IItem): void => select(item, 'border')} items={data.borders} />
+                </div>
+              ))}
+            {type === 'combo' && (
+              <div className={styles.groupContent}>
+                <span className={styles.text}>Broto</span>
+                <Dropdown select={(item: IItem): void => select(item, 'bud')} items={data.buds} />
+              </div>
+            )}
+            {type === 'combo' && (
+              <div className={styles.groupContent}>
+                <span className={styles.text}>Refrigerante</span>
+                <Dropdown select={(item: IItem): void => select(item, 'soda')} items={filterSodas} />
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.infoProduct}>
@@ -66,11 +79,11 @@ export default function ModalFullScreen({
           <img className={styles.imageProduct} src={item.image} alt="Imagem produto" />
           <span>{item.name}</span>
           <span className={styles.description}>{item.description}</span>
-          {selectedItem.flavors.length > 0 && (
+          {Object(selectedItem.flavors).length > 0 && (
             <div className={styles.contentFlavor}>
-              <span>{selectedItem.flavors.length > 1 ? 'Sabores:' : 'Sabor:'}</span>
+              <span>{Object(selectedItem.flavors).length > 1 ? 'Sabores:' : 'Sabor:'}</span>
               <ul className={styles.listContainerFlavor}>
-                {selectedItem.flavors.map((flavor: any, index: number) => {
+                {Object(selectedItem.flavors).map((flavor: IItem, index: number) => {
                   return (
                     <li onClick={() => remove(index)} className={styles.listContentFlavor} key={index}>
                       <div className={styles.infoGroup}>
@@ -120,3 +133,5 @@ export default function ModalFullScreen({
     </div>
   )
 }
+
+export default ModalFullScreen
