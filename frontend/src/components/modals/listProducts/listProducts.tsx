@@ -1,26 +1,25 @@
-import styles from './modalPartial.module.scss'
+import { IItem } from '@/interfaces/item'
+import styles from './listProducts.module.scss'
+import { ChangeEvent } from 'react'
 
-type PropsPartialScreen = {
-  open: (event: boolean) => {}
-  searchFlavor: (text: string) => {}
-  select: (item: object, type: 'flavors') => {}
-  remove: (index: number) => {}
+type TPropsListProducts = {
+  open: (event: boolean) => void
+  search: (text: string) => void
+  select: (item: IItem, type: 'flavors') => void
+  remove: (index: number) => void
   items: object[]
-  selectedFlavors: object[]
+  selected: TSelected
 }
 
-export default function ModalPartialScreen({
-  items,
-  open,
-  searchFlavor,
-  selectedFlavors,
-  select,
-  remove,
-}: PropsPartialScreen) {
+type TSelected = {
+  flavors: IItem[]
+}
+
+const ModalListProducts = ({ items, open, search, selected, select, remove }: TPropsListProducts) => {
   return (
-    <div className={styles.modalPartial}>
-      <div className={styles.modalPartialContent}>
-        <div className={styles.btnCloseModalPartial} onClick={() => open(false)}>
+    <div className={styles.modalContainer}>
+      <div className={styles.modalContent}>
+        <div className={styles.btnCloseModal} onClick={() => open(false)}>
           <i className="bi bi-x-circle-fill"></i>
         </div>
         <div className={styles.search}>
@@ -29,7 +28,7 @@ export default function ModalPartialScreen({
             className={styles.input}
             type="text"
             placeholder="Pesquisar sabor"
-            onChange={(event) => searchFlavor(event.target.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => search(event.target.value)}
           />
         </div>
         <ul className={styles.listContainer}>
@@ -48,11 +47,11 @@ export default function ModalPartialScreen({
             )
           })}
         </ul>
-        <div className={styles.listSelectedFlavors}>
-          <span className={styles.textFlavors}>Sabores selecionados:</span>
-          {selectedFlavors.length > 0 ? (
+        <div className={styles.listSelected}>
+          <span className={styles.text}>Sabores selecionados:</span>
+          {selected.flavors.length > 0 ? (
             <ul>
-              {selectedFlavors.map((flavor: any, index: number) => {
+              {selected.flavors.map((flavor: any, index: number) => {
                 return (
                   <li onClick={() => remove(index)} key={index}>
                     <span>{flavor.name}</span>
@@ -69,3 +68,5 @@ export default function ModalPartialScreen({
     </div>
   )
 }
+
+export default ModalListProducts

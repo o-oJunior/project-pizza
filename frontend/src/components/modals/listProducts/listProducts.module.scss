@@ -1,4 +1,4 @@
-.modalPartial {
+.modalContainer {
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -21,7 +21,7 @@
     outline: #c9c9c9 solid 1px;
   }
 
-  .modalPartialContent {
+  .modalContent {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -41,20 +41,17 @@
     text-align: center;
   }
 
-  .btnCloseModalPartial {
+  .btnCloseModal {
     background-color: #fff;
     position: absolute;
   }
 
-  .btnCloseModalPartial i {
+  .btnCloseModal i {
     font-size: 25px;
-  }
-
-  .btnCloseModalPartial i:hover {
     cursor: pointer;
   }
 
-  .listSelectedFlavors {
+  .listSelected {
     display: flex;
     flex-direction: row;
     padding: 5px;
@@ -62,32 +59,32 @@
     background-color: #fff;
   }
 
-  .listSelectedFlavors .textFlavors {
+  .listSelected .text {
     font-weight: bold;
     padding: 10px;
   }
 
-  .listSelectedFlavors .textNone {
+  .listSelected .textNone {
     color: #afaeae;
     font-weight: bold;
     padding: 10px;
   }
 
-  .listSelectedFlavors ul {
+  .listSelected ul {
     display: flex;
     flex-direction: row;
     list-style: none;
     gap: 15px;
   }
 
-  .listSelectedFlavors ul li {
+  .listSelected ul li {
     display: flex;
     background-color: #dedede;
     padding: 10px;
     gap: 10px;
   }
 
-  .listSelectedFlavors ul li:hover {
+  .listSelected ul li:hover {
     background-color: #c9c9c9;
     cursor: pointer;
   }
