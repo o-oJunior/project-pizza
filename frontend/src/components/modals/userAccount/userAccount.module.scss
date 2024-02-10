@@ -1,0 +1,105 @@
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  padding: 20px;
+  background-color: rgba(#000, 0.4);
+
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 20px;
+    min-width: 40%;
+    min-height: 60%;
+    max-height: 80%;
+  }
+
+  .btnCloseModal {
+    background-color: #fff;
+    position: absolute;
+  }
+
+  .btnCloseModal i {
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+  .form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin: 40px;
+    padding: 20px;
+    border: 1px solid #c9c9c9;
+    gap: 20px;
+    border-radius: 20px;
+  }
+
+  .text {
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .label {
+      font-size: 15px;
+      font-weight: 500;
+      margin: 0 0 0 2px;
+    }
+
+    .input {
+      padding: 10px;
+      border: 1px solid #c9c9c9;
+      border-radius: 10px;
+    }
+
+    .input:focus {
+      outline: #c9c9c9 solid 1px;
+    }
+  }
+
+  .button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #009246;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: #03aa54;
+  }
+
+  .link {
+    font-size: 13px;
+    color: purple;
+    text-decoration-line: underline;
+    cursor: pointer;
+  }
+
+  .buttonGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .signup {
+    text-align: center;
+  }
+}
