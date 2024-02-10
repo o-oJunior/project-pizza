@@ -1,13 +1,8 @@
-export interface ISelected {
-  bud: IComponentsItem
-  border: IComponentsItem
-  flavors: IComponentsItem[]
-  soda: IComponentsItem
-}
+import { IPropsItem } from './item'
 
-export interface IComponentsItem {
-  id: number
-  name: string
-  priceAdditional?: number
-  liter?: number
+export interface ISelected {
+  bud: IPropsItem
+  border: IPropsItem
+  flavors: IPropsItem[]
+  soda: IPropsItem
 }
