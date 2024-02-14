@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/redux/hooks'
 import styles from './navbar.module.scss'
-import { manageAccountAcess, openModal } from '@/redux/accountAccess/slice'
+import { manageAccountAccess, openModal } from '@/redux/accountAccess/slice'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -21,7 +21,7 @@ const Navbar = () => {
     const modal = true
 
     dispatch(openModal(modal))
-    dispatch(manageAccountAcess(hasAccount))
+    dispatch(manageAccountAccess(hasAccount))
   }
 
   if (typeof window !== 'undefined') {

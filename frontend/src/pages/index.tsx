@@ -21,7 +21,7 @@ import { IItem } from '@/interfaces/item'
 
 //Redux
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { manageAccountAcess, openModal, useAccountAccess } from '@/redux/accountAccess/slice'
+import { manageAccountAccess, openModal, useAccountAccess } from '@/redux/accountAccess/slice'
 
 type TApiData = {
   pizzas: IItem[]
@@ -186,7 +186,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
 
   const handleAccountAccess = () => {
     const value: boolean = accountAccess.hasAccount ? false : true
-    dispatch(manageAccountAcess(value))
+    dispatch(manageAccountAccess(value))
   }
 
   if (typeof document !== 'undefined') {
