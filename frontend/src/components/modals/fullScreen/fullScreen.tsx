@@ -9,7 +9,7 @@ type TPropsFullScreen = {
   openModalListProducts: (event: boolean) => void
   select: (item: IItem, type: 'border' | 'bud' | 'soda') => void
   remove: (index: number) => void
-  onChangeQuantity: (quantity: number) => void
+  handleQuantity: (quantity: number) => void
   item: IItem
   data: IData
   selectedItem: ISelected
@@ -23,7 +23,7 @@ const ModalFullScreen = ({
   openModalListProducts,
   select,
   remove,
-  onChangeQuantity,
+  handleQuantity,
   item,
   data,
   selectedItem,
@@ -32,6 +32,7 @@ const ModalFullScreen = ({
   type,
 }: TPropsFullScreen) => {
   const filterSodas = data.sodas.filter((soda) => Object(soda.liter) >= 1)
+  const filterCanSodas = data.sodas.filter((soda) => soda.name.includes('Lata'))
 
   return (
     <div className={styles.modalContainer}>
@@ -53,23 +54,28 @@ const ModalFullScreen = ({
                 </button>
               </div>
             )}
-            {Object(item.slice) >= 4 ||
-              (type === 'combo' && (
-                <div className={styles.groupContent}>
-                  <span className={styles.text}>Borda</span>
-                  <Dropdown select={(item: IItem): void => select(item, 'border')} items={data.borders} />
-                </div>
-              ))}
+            {(Object(item.slice) >= 4 || type === 'combo') && (
+              <div className={styles.groupContent}>
+                <span className={styles.text}>Borda</span>
+                <Dropdown select={(item: IItem): void => select(item, 'border')} items={data.borders} />
+              </div>
+            )}
             {type === 'combo' && (
               <div className={styles.groupContent}>
                 <span className={styles.text}>Broto</span>
                 <Dropdown select={(item: IItem): void => select(item, 'bud')} items={data.buds} />
               </div>
             )}
-            {type === 'combo' && (
+            {(Object(item.slice) >= 9 || type === 'combo') && (
               <div className={styles.groupContent}>
                 <span className={styles.text}>Refrigerante</span>
                 <Dropdown select={(item: IItem): void => select(item, 'soda')} items={filterSodas} />
+              </div>
+            )}
+            {Object(item.slice) == 4 && (
+              <div className={styles.groupContent}>
+                <span className={styles.text}>Refrigerante</span>
+                <Dropdown select={(item: IItem): void => select(item, 'soda')} items={filterCanSodas} />
               </div>
             )}
           </div>
@@ -118,11 +124,11 @@ const ModalFullScreen = ({
       </div>
       <div className={styles.purchase}>
         <div className={styles.quantity}>
-          <button className={styles.btnQuantity} onClick={() => onChangeQuantity(quantity - 1)}>
+          <button className={styles.btnQuantity} onClick={() => handleQuantity(quantity - 1)}>
             -
           </button>
           <span>{quantity}</span>
-          <button className={styles.btnQuantity} onClick={() => onChangeQuantity(quantity + 1)}>
+          <button className={styles.btnQuantity} onClick={() => handleQuantity(quantity + 1)}>
             +
           </button>
         </div>
