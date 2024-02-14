@@ -17,12 +17,12 @@ export const accountAccessSlice = createSlice({
     openModal: (state, action: PayloadAction<boolean>) => {
       state.modal = action.payload
     },
-    manageAccountAcess: (state, action: PayloadAction<boolean>) => {
+    manageAccountAccess: (state, action: PayloadAction<boolean>) => {
       state.hasAccount = action.payload
     },
   },
 })
 
-export const { openModal, manageAccountAcess } = accountAccessSlice.actions
+export const { openModal, manageAccountAccess } = accountAccessSlice.actions
 
 export const useAccountAccess = (state: any) => state.accountAccess as IAccountAccess
