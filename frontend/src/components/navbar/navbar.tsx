@@ -1,6 +1,10 @@
+import { useAppDispatch } from '@/redux/hooks'
 import styles from './navbar.module.scss'
+import { manageAccountAcess, openModal } from '@/redux/accountAccess/slice'
 
 const Navbar = () => {
+  const dispatch = useAppDispatch()
+
   const showMenuMobile = () => {
     const menu = document.getElementById('menu')
     menu!.className = menu?.className === styles.menu ? styles.menuMobile : styles.menu
@@ -11,6 +15,13 @@ const Navbar = () => {
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' })
     }
+  }
+
+  const openModalLogin = (hasAccount: boolean) => {
+    const modal = true
+
+    dispatch(openModal(modal))
+    dispatch(manageAccountAcess(hasAccount))
   }
 
   if (typeof window !== 'undefined') {
@@ -50,8 +61,12 @@ const Navbar = () => {
         </ul>
 
         <div className={styles.btnContainer}>
-          <button className={styles.btnSignUp}>Criar conta</button>
-          <button className={styles.btnSignIn}>Entrar</button>
+          <button className={styles.btnSignUp} onClick={() => openModalLogin(false)}>
+            Criar conta
+          </button>
+          <button className={styles.btnSignIn} onClick={() => openModalLogin(true)}>
+            Entrar
+          </button>
         </div>
       </div>
     </nav>

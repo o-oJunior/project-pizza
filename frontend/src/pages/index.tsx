@@ -13,10 +13,15 @@ import { getBud } from '@/api/bud'
 import ItemList from '@/components/itemList/itemList'
 import ModalListProducts from '@/components/modals/listProducts/listProducts'
 import ModalFullScreen from '@/components/modals/fullScreen/fullScreen'
+import ModalAccountAccess from '@/components/modals/accountAccess/accountAccess'
 
 //Interfaces
 import { ISelected } from '@/interfaces/selected'
 import { IItem } from '@/interfaces/item'
+
+//Redux
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { manageAccountAcess, openModal, useAccountAccess } from '@/redux/accountAccess/slice'
 
 type TApiData = {
   pizzas: IItem[]
@@ -82,6 +87,8 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
   const [selectedItem, setSelectedItem] = useState<ISelected>(selectedItemInitialValue)
   const [order, setOrder] = useState<IOrder>(orderInitialValue)
   const [typeSelect, setTypeSelect] = useState<string>('')
+  const accountAccess = useAppSelector(useAccountAccess)
+  const dispatch = useAppDispatch()
 
   const open = (item: IItem, type: string): void => {
     setItemSelect({ ...item })
@@ -168,7 +175,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     }
   }
 
-  const onChangeQuantity = (quantity: number): void => {
+  const handleQuantity = (quantity: number): void => {
     if (quantity <= 1) {
       setOrder({ ...order, quantity: 1, total: order.subTotal })
     } else {
@@ -177,8 +184,13 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     }
   }
 
+  const handleAccountAccess = () => {
+    const value: boolean = accountAccess.hasAccount ? false : true
+    dispatch(manageAccountAcess(value))
+  }
+
   if (typeof document !== 'undefined') {
-    document.body.classList.toggle('noScroll', modalFullScreen)
+    document.body.classList.toggle('noScroll', modalFullScreen || accountAccess.modal)
   }
 
   return (
@@ -197,7 +209,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
           select={(item: IItem, type: 'border' | 'bud' | 'soda'): void => select(item, type)}
           selectedItem={selectedItem}
           total={order.total}
-          onChangeQuantity={(quantity: number): void => onChangeQuantity(quantity)}
+          handleQuantity={(quantity: number): void => handleQuantity(quantity)}
           quantity={order.quantity}
         />
       )}
@@ -209,6 +221,16 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
           selected={selectedItem}
           select={(item: IItem, type: 'flavors'): void => select(item, type)}
           remove={(index: number): void => removeFlavor(index)}
+        />
+      )}
+      {accountAccess.modal && (
+        <ModalAccountAccess
+          handleChangeInput={() => {}}
+          handleAccountAccess={handleAccountAccess}
+          closeModal={(event: boolean): void => {
+            dispatch(openModal(event))
+          }}
+          hasAccount={accountAccess.hasAccount}
         />
       )}
     </main>
