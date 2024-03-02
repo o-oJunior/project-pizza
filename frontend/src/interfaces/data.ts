@@ -1,7 +1,7 @@
-import { IPropsItem } from './item'
+import { IItem } from './item'
 
 export interface IData {
-  buds: IPropsItem[]
-  borders: IPropsItem[]
-  sodas: IPropsItem[]
+  buds: IItem[]
+  borders: IItem[]
+  sodas: IItem[]
 }
