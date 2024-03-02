@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react'
 import styles from './index.module.scss'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 // API's
 import { getCombo } from '@/api/combo'
@@ -16,12 +16,20 @@ import ModalFullScreen from '@/components/modals/fullScreen/fullScreen'
 import ModalAccountAccess from '@/components/modals/accountAccess/accountAccess'
 
 //Interfaces
-import { ISelected } from '@/interfaces/selected'
+import { ISelected, initialValueSelected } from '@/interfaces/selected'
 import { IItem } from '@/interfaces/item'
+import { IOrder, initialValueOrder } from '@/interfaces/order'
+import { ICreateUser, initialValueCreateUser } from '@/interfaces/user/create'
+import { IAuthUser, initialValueAuthUser } from '@/interfaces/user/auth'
+import { IValidationRule } from '@/interfaces/validationRule'
+import { IActionValidation } from '@/interfaces/actionValidation'
 
 //Redux
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { manageAccountAccess, openModal, useAccountAccess } from '@/redux/accountAccess/slice'
+import { maskCPF } from '@/utils/masks/cpf'
+import { maskPHONE } from '@/utils/masks/phone'
+import { ISliceValidation } from '@/interfaces/sliceValidation'
 
 type TApiData = {
   pizzas: IItem[]
@@ -34,49 +42,26 @@ type TApiData = {
 }
 
 export async function getStaticProps() {
-  const pizzas: object[] = await getPizzaSize()
-  const combos: object[] = await getCombo()
-  const sodas: object[] = await getSodas()
-  const juices: object[] = await getJuices()
-  const flavors: object[] = await getFlavor()
-  const borders: object[] = await getBorder()
-  const buds: object[] = await getBud()
+  const [pizzas, combos, sodas] = await Promise.all([getPizzaSize(), getCombo(), getSodas()])
+
+  const [juices, flavors, borders, buds] = await Promise.all([
+    getJuices(),
+    getFlavor(),
+    getBorder(),
+    getBud(),
+  ])
 
   return {
     props: {
-      pizzas,
-      combos,
-      sodas,
-      juices,
-      flavors,
-      borders,
-      buds,
+      pizzas: pizzas,
+      combos: combos,
+      sodas: sodas,
+      juices: juices,
+      flavors: flavors,
+      borders: borders,
+      buds: buds,
     },
   }
-}
-
-const selectedItemInitialValue: ISelected = {
-  bud: { id: 0, name: '', priceAdditional: 0 },
-  border: { id: 0, name: '', priceAdditional: 0 },
-  flavors: [],
-  soda: { id: 0, name: '', price: 0 },
-}
-
-const orderInitialValue: IOrder = {
-  code: 0,
-  subTotal: 0,
-  total: 0,
-  dateOrder: new Date(),
-  timeOrder: new Date(),
-  quantity: 1,
-  idClient: 0,
-  idAddress: 0,
-  idPizzaSize: 0,
-  idFlavor: 0,
-  idBorder: 0,
-  idBud: 0,
-  idDrink: 0,
-  idCombo: 0,
 }
 
 export default function Home({ pizzas, combos, sodas, juices, flavors, borders, buds }: TApiData) {
@@ -84,9 +69,13 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
   const [modalListProducts, setModalListProducts] = useState<boolean>(false)
   const [itemSelect, setItemSelect] = useState<IItem>({ id: 0, name: '' })
   const [flavorItems, setFlavorItems] = useState<object[]>(flavors)
-  const [selectedItem, setSelectedItem] = useState<ISelected>(selectedItemInitialValue)
-  const [order, setOrder] = useState<IOrder>(orderInitialValue)
+  const [selectedItem, setSelectedItem] = useState<ISelected>(initialValueSelected)
+  const [textOfSelectionOfFlavor, setTextOfSelectionOfFlavor] = useState<string>('')
+  const [order, setOrder] = useState<IOrder>(initialValueOrder)
   const [typeSelect, setTypeSelect] = useState<string>('')
+  const [createUser, setCreateUser] = useState<ICreateUser>(initialValueCreateUser)
+  const [authUser, setAuthUser] = useState<IAuthUser>(initialValueAuthUser)
+  const [requiredFieldText, setRequiredFieldText] = useState<string>('')
   const accountAccess = useAppSelector(useAccountAccess)
   const dispatch = useAppDispatch()
 
@@ -96,21 +85,36 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     setOrder({ ...order, subTotal: Object(item.price), total: Object(item.price) })
     setModalFullScreen(true)
 
-    if (item.slice === 2) {
-      const filterFlavor = flavors.filter((flavor: any) => flavor.type === 'Doce')
-      setFlavorItems(filterFlavor)
-    } else if (item.slice === 4) {
-      const filterFlavor = flavors.filter((flavor: any) => flavor.type === 'Salgada')
-      setFlavorItems(filterFlavor)
+    const filterFlavorByType = (filterType: string): IItem[] =>
+      flavors.filter((flavor: any) => flavor.type === filterType)
+
+    const validateSlice: ISliceValidation = {
+      2: (): void => {
+        setTextOfSelectionOfFlavor('Selecione 1 sabor')
+        return setFlavorItems(filterFlavorByType('Doce'))
+      },
+      4: (): void => {
+        setTextOfSelectionOfFlavor('Selecione 1 sabor')
+        return setFlavorItems(filterFlavorByType('Salgada'))
+      },
+      6: (): void => {
+        setTextOfSelectionOfFlavor('Selecione 2 sabores')
+        return setFlavorItems(flavors)
+      },
+    }
+
+    if (validateSlice[Number(item.slice)]) {
+      validateSlice[Number(item.slice)]()
     } else {
+      setTextOfSelectionOfFlavor('Selecione 3 sabores')
       setFlavorItems(flavors)
     }
   }
 
   const closeModalFullScreen = (event: boolean): void => {
     setModalFullScreen(event)
-    setSelectedItem(selectedItemInitialValue)
-    setOrder(orderInitialValue)
+    setSelectedItem(initialValueSelected)
+    setOrder(initialValueOrder)
   }
 
   const searchFlavor = (event: string): void => {
@@ -120,57 +124,62 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     setFlavorItems(search)
   }
 
+  const handleOrderValue = (
+    action: string,
+    order: IOrder,
+    objectSelected: IItem,
+    item?: IItem | undefined
+  ): IOrder => {
+    const priceItem: number = item?.priceAdditional ? Object(item.priceAdditional) : 0
+    const priceObjectSelect: number = Object(objectSelected!.priceAdditional)
+    let newSubTotal = 0
+    const condition: boolean = priceItem < priceObjectSelect
+    const subtractDifference: number = order.subTotal - (priceObjectSelect - priceItem)
+    const sum: number = order.subTotal + priceItem
+    const validateActions: IActionValidation = {
+      select: (): number => (condition ? subtractDifference : sum),
+      remove: (): number => order.subTotal - priceObjectSelect,
+    }
+    newSubTotal = validateActions[action]()
+    return { ...order, subTotal: newSubTotal, total: newSubTotal * order.quantity }
+  }
+
   const removeFlavor = (index: number): void => {
     const flavorSelected: IItem = selectedItem.flavors[index]
     const filterFlavor: IItem[] = selectedItem.flavors.filter((flavor) => flavor.id == flavorSelected.id)
     if (filterFlavor.length == 1) {
-      const valueSubTotal = order.subTotal - selectedItem.flavors[index].priceAdditional!
-      const valueTotal = valueSubTotal * order.quantity
-      setOrder({ ...order, subTotal: valueSubTotal, total: valueTotal })
+      setOrder(handleOrderValue('remove', order, flavorSelected))
     }
     selectedItem.flavors.splice(index, 1)
     setSelectedItem({ ...selectedItem, flavors: selectedItem.flavors.map((flavor) => flavor) })
   }
 
   const select = (item: IItem, type: 'flavors' | 'bud' | 'soda' | 'border'): void => {
-    const filterFlavor = selectedItem.flavors.filter((flavor) => flavor.name == item.name)
-    if (type === 'flavors') {
-      if (
-        (selectedItem.flavors.length <= 2 && (Object(itemSelect.slice) >= 9 || typeSelect === 'combo')) ||
-        (selectedItem.flavors.length <= 1 && Object(itemSelect.slice) == 6) ||
-        (selectedItem.flavors.length == 0 && Object(itemSelect.slice) <= 4)
-      ) {
-        setSelectedItem({ ...selectedItem, [type]: [...selectedItem.flavors, item] })
-      } else {
-        const firstItem = selectedItem.flavors[0]
-        selectedItem.flavors.shift()
+    const isTypeFlavor = type === 'flavors'
+    const isExistFlavor = (item: IItem): boolean =>
+      selectedItem.flavors.some((flavor) => flavor.name == item.name)
+    const canAdd =
+      (selectedItem.flavors.length <= 2 && (Object(itemSelect.slice) >= 9 || typeSelect === 'combo')) ||
+      (selectedItem.flavors.length <= 1 && Object(itemSelect.slice) == 6) ||
+      (selectedItem.flavors.length == 0 && Object(itemSelect.slice) <= 4)
+
+    if (isTypeFlavor) {
+      if (canAdd) {
         setSelectedItem({ ...selectedItem, flavors: [...selectedItem.flavors, item] })
-        const previewFlavors: object[] = selectedItem.flavors
-        previewFlavors.push(item)
-        const checkFlavorRemoved = previewFlavors.filter((flavor: any) => flavor.name == firstItem.name)
-        if (checkFlavorRemoved.length == 0) {
-          const valueSubTotal = order.subTotal - firstItem.priceAdditional!
-          const valueTotal = valueSubTotal * order.quantity
-          setOrder({ ...order, subTotal: valueSubTotal, total: valueTotal })
+      } else {
+        const removedFirstItem = selectedItem.flavors.shift()
+        setSelectedItem({ ...selectedItem, flavors: [...selectedItem.flavors, item] })
+        if (!isExistFlavor(removedFirstItem!)) {
+          setOrder(handleOrderValue('remove', order, removedFirstItem!))
         }
       }
     } else {
       setSelectedItem({ ...selectedItem, [type]: item })
     }
-
-    if (Object(item.priceAdditional) >= 0 && filterFlavor.length == 0) {
+    if (Object(item.priceAdditional) >= 0 && !isExistFlavor(item)) {
       const objectSelected = Object(selectedItem[type])
       if (objectSelected.priceAdditional != item.priceAdditional) {
-        if (Object(item.priceAdditional) < objectSelected.priceAdditional) {
-          const valueSubTotal =
-            order.subTotal - (objectSelected.priceAdditional - Object(item.priceAdditional))
-          const valueTotal = valueSubTotal * order.quantity
-          setOrder({ ...order, subTotal: valueSubTotal, total: valueTotal })
-        } else {
-          const valueSubTotal = order.subTotal + Object(item.priceAdditional)
-          const valueTotal = valueSubTotal * order.quantity
-          setOrder({ ...order, subTotal: valueSubTotal, total: valueTotal })
-        }
+        setOrder(handleOrderValue('select', order, objectSelected, item))
       }
     }
   }
@@ -184,13 +193,150 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     }
   }
 
-  const handleAccountAccess = () => {
+  const closeModalAccountAccess = (event: boolean): void => {
+    setAuthUser(initialValueAuthUser)
+    setCreateUser(initialValueCreateUser)
+    setRequiredFieldText('')
+    dispatch(openModal(event))
+  }
+
+  const handleAccountAccess = (): void => {
     const value: boolean = accountAccess.hasAccount ? false : true
+    setAuthUser(initialValueAuthUser)
+    setCreateUser(initialValueCreateUser)
     dispatch(manageAccountAccess(value))
   }
 
+  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>): void => {
+    const name: string = event.target.name
+    const value: string = event.target.value
+    const regex: RegExp = /[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ '-]/g
+
+    const validationRules: IValidationRule = {
+      fullName: (value: string) => value.replace(regex, ''),
+      cpf: (value: string) => maskCPF(value),
+      phone: (value: string) => maskPHONE(value),
+    }
+
+    if (accountAccess.hasAccount) {
+      setAuthUser({ ...authUser, [name]: value })
+    } else {
+      if (validationRules[name]) {
+        setCreateUser({ ...createUser, [name]: validationRules[name](value) })
+      } else {
+        setCreateUser({ ...createUser, [name]: value })
+      }
+    }
+  }
+
+  const handleCreatingUser = () => {
+    const form: HTMLFormElement | null = document.querySelector('form')
+    const inputs: NodeListOf<HTMLInputElement> | undefined = form?.querySelectorAll('input')
+    const messageRequiredField: string = 'Campo obrigatório!*'
+
+    const isEmailValid = (email: string) => {
+      const re =
+        /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+
+      return re.test(email)
+    }
+
+    const updateInputValidationState = (
+      input: HTMLInputElement,
+      isValid: boolean,
+      validationMessage: string = ''
+    ): void => {
+      if (isValid) {
+        input.classList.remove('noValid')
+        input.classList.add('valid')
+        input.setCustomValidity('')
+      } else {
+        input.classList.remove('valid')
+        input.classList.add('noValid')
+        input.setCustomValidity(validationMessage)
+      }
+    }
+
+    const validationRules: IValidationRule = {
+      fullName: (value: string) => (value.length >= 3 ? '' : 'Nome deve conter no mínimo 3 caracteres'),
+      cpf: (value: string) => (value.length >= 14 ? '' : 'CPF Inválido!'),
+      phone: (value: string) => (value.length >= 14 ? '' : 'Telefone Inválido!'),
+      email: (value: string) => (isEmailValid(value) ? '' : 'Email Inválido!'),
+    }
+
+    const validateInput = (input: HTMLInputElement): void => {
+      let validationMessage = ''
+      if (!input.value.trim()) {
+        validationMessage = messageRequiredField
+      } else if (validationRules[input.name]) {
+        validationMessage = validationRules[input.name](input.value)
+      }
+      const isValid = validationMessage === ''
+      updateInputValidationState(input, isValid, validationMessage)
+    }
+
+    const checkedPassword = (): void => {
+      const inputPassword: HTMLInputElement | null | undefined = form?.querySelector('input[name="password"]')
+      const inputConfirmPassword: HTMLInputElement | null | undefined = form?.querySelector(
+        'input[name="confirmPassword"]'
+      )
+      const updateInputState = (isValid: boolean, validationMessage: string) => {
+        updateInputValidationState(inputPassword!, isValid, validationMessage)
+        updateInputValidationState(inputConfirmPassword!, isValid, validationMessage)
+      }
+      const fieldBlank = !inputPassword?.value.trim() && !inputConfirmPassword?.value.trim()
+      const isValueDifferent = inputPassword?.value !== inputConfirmPassword?.value
+      if (fieldBlank) {
+        updateInputState(false, messageRequiredField)
+      } else if (inputPassword!.value.length < 5) {
+        updateInputState(false, 'A senha deve conter no minimo 5 caracteres.')
+      } else if (isValueDifferent) {
+        updateInputState(false, 'As senhas não coincidem!')
+      } else {
+        updateInputState(true, '')
+      }
+    }
+
+    const inputsInvalid: string[] = []
+    const storeInputInvalid = (input: HTMLInputElement, isValidity: boolean) => {
+      isValidity ? null : inputsInvalid.push(input.name)
+    }
+
+    const validationCall = (input: HTMLInputElement) => {
+      validateInput(input)
+      checkedPassword()
+      input.reportValidity()
+    }
+
+    inputs?.forEach((input: HTMLInputElement): void => {
+      input.setCustomValidity('')
+      validationCall(input)
+      const isValidity = input.checkValidity()
+      storeInputInvalid(input, isValidity)
+
+      input.addEventListener('input', () => {
+        validationCall(input)
+        storeInputInvalid(input, isValidity)
+      })
+    })
+
+    if (inputsInvalid.length != 0) {
+      return setRequiredFieldText('Preencha todos os campos obrigatórios!*')
+    } else {
+      setRequiredFieldText('')
+    }
+  }
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (accountAccess.hasAccount) {
+    } else {
+      handleCreatingUser()
+    }
+  }
+
   if (typeof document !== 'undefined') {
-    document.body.classList.toggle('noScroll', modalFullScreen || accountAccess.modal)
+    document.body.classList.toggle('noScroll', modalFullScreen)
   }
 
   return (
@@ -202,35 +348,39 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
         <ModalFullScreen
           type={typeSelect}
           item={itemSelect}
-          openModalFull={(event: boolean): void => closeModalFullScreen(event)}
-          openModalListProducts={(event: boolean): void => setModalListProducts(event)}
-          remove={(index: number): void => removeFlavor(index)}
+          openModalFull={closeModalFullScreen}
+          openModalListProducts={setModalListProducts}
+          remove={removeFlavor}
           data={{ buds, borders, sodas }}
-          select={(item: IItem, type: 'border' | 'bud' | 'soda'): void => select(item, type)}
+          select={select}
           selectedItem={selectedItem}
           total={order.total}
-          handleQuantity={(quantity: number): void => handleQuantity(quantity)}
+          handleQuantity={handleQuantity}
           quantity={order.quantity}
+          textOfSelectionOfFlavor={textOfSelectionOfFlavor}
         />
       )}
       {modalListProducts && (
         <ModalListProducts
-          search={(text: string): void => searchFlavor(text)}
+          search={searchFlavor}
           items={flavorItems}
-          open={(event: boolean): void => setModalListProducts(event)}
+          open={setModalListProducts}
           selected={selectedItem}
-          select={(item: IItem, type: 'flavors'): void => select(item, type)}
-          remove={(index: number): void => removeFlavor(index)}
+          select={select}
+          remove={removeFlavor}
+          textOfSelectionOfFlavor={textOfSelectionOfFlavor}
         />
       )}
       {accountAccess.modal && (
         <ModalAccountAccess
-          handleChangeInput={() => {}}
+          handleChangeInput={handleChangeInput}
           handleAccountAccess={handleAccountAccess}
-          closeModal={(event: boolean): void => {
-            dispatch(openModal(event))
-          }}
+          closeModal={closeModalAccountAccess}
+          handleSubmit={handleSubmit}
+          authUser={authUser}
+          createUser={createUser}
           hasAccount={accountAccess.hasAccount}
+          requiredFieldText={requiredFieldText}
         />
       )}
     </main>

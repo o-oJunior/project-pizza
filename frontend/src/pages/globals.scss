@@ -10,3 +10,19 @@
 .noScroll {
   overflow: hidden;
 }
+
+.valid {
+  border: 1px solid #c9c9c9;
+}
+
+.valid:focus {
+  outline: #c9c9c9 solid 1px;
+}
+
+.noValid {
+  border: 1px solid #ce2b37;
+}
+
+.noValid:focus {
+  outline: 1px solid #ce2b37;
+}
