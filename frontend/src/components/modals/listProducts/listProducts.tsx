@@ -9,13 +9,22 @@ type TPropsListProducts = {
   remove: (index: number) => void
   items: object[]
   selected: TSelected
+  textOfSelectionOfFlavor: string
 }
 
 type TSelected = {
   flavors: IItem[]
 }
 
-const ModalListProducts = ({ items, open, search, selected, select, remove }: TPropsListProducts) => {
+const ModalListProducts = ({
+  items,
+  open,
+  search,
+  selected,
+  select,
+  remove,
+  textOfSelectionOfFlavor,
+}: TPropsListProducts) => {
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>
@@ -23,7 +32,7 @@ const ModalListProducts = ({ items, open, search, selected, select, remove }: TP
           <i className="bi bi-x-circle-fill"></i>
         </div>
         <div className={styles.search}>
-          <span className={styles.title}>Escolha até 3 sabores:</span>
+          <span className={styles.title}>{textOfSelectionOfFlavor}:</span>
           <input
             className={styles.input}
             type="text"

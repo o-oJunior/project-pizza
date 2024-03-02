@@ -16,6 +16,7 @@ type TPropsFullScreen = {
   total: number
   quantity: number
   type: string
+  textOfSelectionOfFlavor: string
 }
 
 const ModalFullScreen = ({
@@ -30,6 +31,7 @@ const ModalFullScreen = ({
   total,
   quantity,
   type,
+  textOfSelectionOfFlavor,
 }: TPropsFullScreen) => {
   const filterSodas = data.sodas.filter((soda) => Object(soda.liter) >= 1)
   const filterCanSodas = data.sodas.filter((soda) => soda.name.includes('Lata'))
@@ -44,11 +46,7 @@ const ModalFullScreen = ({
           <div className={styles.groupContainer}>
             {type != 'drink' && (
               <div className={styles.groupContent}>
-                {(Object(item.slice) >= 9 || type === 'combo') && (
-                  <span className={styles.text}>Escolha até 3 sabores</span>
-                )}
-                {Object(item.slice) == 6 && <span className={styles.text}>Escolha até 2 sabores</span>}
-                {Object(item.slice) <= 4 && <span className={styles.text}>Escolha 1 sabor</span>}
+                <span className={styles.text}>{textOfSelectionOfFlavor}</span>
                 <button className={styles.btnFlavors} onClick={() => openModalListProducts(true)}>
                   {Object(item.slice) <= 4 ? 'Escolher sabor' : 'Escolher sabores'}
                 </button>
