@@ -1,16 +1,16 @@
-import { IPropsItem } from '@/interfaces/item'
+import { IItem } from '@/interfaces/item'
 import Card from '../card/card'
 import styles from './itemList.module.scss'
 
 type Props = {
-  items: IPropsItem[] | PropsDrink
+  items: IItem[] | PropsDrink
   type: 'Pizzas' | 'Bebidas' | 'Combos'
-  open: (item: IPropsItem) => void
+  open: (item: IItem) => void
 }
 
 type PropsDrink = {
-  sodas?: IPropsItem[]
-  juices?: IPropsItem[]
+  sodas?: IItem[]
+  juices?: IItem[]
 }
 
 const ItemList = ({ items, open, type }: Props) => {
@@ -21,7 +21,7 @@ const ItemList = ({ items, open, type }: Props) => {
           <span className={styles.title}>{type}</span>
           {Array.isArray(items) ? (
             <div className={styles.listContainer}>
-              {items.map((item: IPropsItem) => {
+              {items.map((item: IItem) => {
                 return (
                   <div className={styles.cardComponent} key={item.id} onClick={() => open(item)}>
                     <Card item={item} />
@@ -31,11 +31,11 @@ const ItemList = ({ items, open, type }: Props) => {
             </div>
           ) : (
             <>
-              {items.sodas && (
+              {items.sodas !== undefined && (
                 <div className={styles.groupContainer}>
                   <span className={styles.subtitle}>Refrigerantes</span>
                   <div className={styles.listContainer}>
-                    {items.sodas.map((soda: any) => {
+                    {items.sodas?.map((soda: any) => {
                       return (
                         <div className={styles.cardComponent} key={soda.id} onClick={() => open(soda)}>
                           <Card item={soda} />
@@ -45,7 +45,7 @@ const ItemList = ({ items, open, type }: Props) => {
                   </div>
                 </div>
               )}
-              {items.juices && (
+              {items.juices !== undefined && (
                 <div className={styles.groupContainer}>
                   <span className={styles.subtitle}>Sucos</span>
                   <div className={styles.listContainer}>
