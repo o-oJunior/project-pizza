@@ -38,8 +38,19 @@ export class ClientService {
       }
       createClientDto.hashPassword = hash
     })
-    const date = new Date().toLocaleDateString()
-    const time = new Date().toLocaleTimeString()
+    const optionsDate: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }
+    const optionsTime: Intl.DateTimeFormatOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    }
+    const date = new Date().toLocaleDateString('pt-BR', optionsDate)
+    const time = new Date().toLocaleTimeString('pt-BR', optionsTime)
     createClientDto.dateCreated = date
     createClientDto.timeCreated = time
     try {
@@ -51,10 +62,8 @@ export class ClientService {
         return checkCPF || checkEmail
       }
       await this.clientRepository.createClient(createClientDto)
-      console.log('Client service ' + createClientDto)
       return { statusCode: 201, message: 'Cliente criado com sucesso!' }
     } catch (error) {
-      console.log('Erro client service ' + error)
       return this.clientRepository.statusCode500
     }
   }
