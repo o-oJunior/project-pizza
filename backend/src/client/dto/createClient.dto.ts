@@ -24,9 +24,15 @@ export class CreateClientDto {
   @IsNotEmpty()
   password: string
 
-  hashPassword: string
-
+  @IsString()
+  @IsNotEmpty()
+  @Length(10)
   dateCreated: string
 
+  @IsString()
+  @IsNotEmpty()
+  @Length(8)
   timeCreated: string
+
+  hashPassword: string
 }
