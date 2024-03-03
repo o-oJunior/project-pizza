@@ -3,6 +3,7 @@ import { ClientRepository } from './repositories/client.repository'
 import { CreateClientDto } from './dto/createClient.dto'
 import { isExists } from './validations/isExists'
 import { UpdateClientDto } from './dto/updateClient.dto'
+const bcrypt = require('bcrypt')
 @Injectable()
 export class ClientService {
   constructor(private readonly clientRepository: ClientRepository) {}
@@ -30,6 +31,13 @@ export class ClientService {
   }
 
   async createClient(createClientDto: CreateClientDto): Promise<object> {
+    const saltRounds = 10
+    bcrypt.hash(createClientDto.password, saltRounds, (error, hash) => {
+      if (error) {
+        return console.log(error)
+      }
+      createClientDto.hashPassword = hash
+    })
     const date = new Date().toLocaleDateString()
     const time = new Date().toLocaleTimeString()
     createClientDto.dateCreated = date

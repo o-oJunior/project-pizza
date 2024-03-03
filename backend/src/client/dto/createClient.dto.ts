@@ -22,6 +22,8 @@ export class CreateClientDto {
 
   @IsString()
   @IsNotEmpty()
+  password: string
+
   hashPassword: string
 
   dateCreated: string
