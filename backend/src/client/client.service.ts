@@ -32,27 +32,12 @@ export class ClientService {
 
   async createClient(createClientDto: CreateClientDto): Promise<object> {
     const saltRounds = 10
-    bcrypt.hash(createClientDto.password, saltRounds, (error, hash) => {
+    bcrypt.hash(createClientDto.password, saltRounds, (error: Error, hash: string) => {
       if (error) {
         return console.log(error)
       }
       createClientDto.hashPassword = hash
     })
-    const optionsDate: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }
-    const optionsTime: Intl.DateTimeFormatOptions = {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    }
-    const date = new Date().toLocaleDateString('pt-BR', optionsDate)
-    const time = new Date().toLocaleTimeString('pt-BR', optionsTime)
-    createClientDto.dateCreated = date
-    createClientDto.timeCreated = time
     try {
       const cpf: object = await this.clientRepository.getClientByCPF(createClientDto.cpf)
       const email: object = await this.clientRepository.getClientByEMAIL(createClientDto.email)
