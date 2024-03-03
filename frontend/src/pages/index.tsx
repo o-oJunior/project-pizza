@@ -2,20 +2,24 @@ import styles from './index.module.scss'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 // API's
-import { getCombo } from '@/api/combo'
-import { getPizzaSize } from '@/api/pizzaSize'
-import { getJuices, getSodas } from '@/api/drink'
-import { getFlavor } from '@/api/flavor'
-import { getBorder } from '@/api/border'
-import { getBud } from '@/api/bud'
+// GET's
+import { getCombo } from '@/api/get/combo'
+import { getPizzaSize } from '@/api/get/pizzaSize'
+import { getJuices, getSodas } from '@/api/get/drink'
+import { getFlavor } from '@/api/get/flavor'
+import { getBorder } from '@/api/get/border'
+import { getBud } from '@/api/get/bud'
 
-//Components
+// POST
+import fetchPostCreateUser from '@/api/post/createUser'
+
+// Components
 import ItemList from '@/components/itemList/itemList'
 import ModalListProducts from '@/components/modals/listProducts/listProducts'
 import ModalFullScreen from '@/components/modals/fullScreen/fullScreen'
 import ModalAccountAccess from '@/components/modals/accountAccess/accountAccess'
 
-//Interfaces
+// Interfaces
 import { ISelected, initialValueSelected } from '@/interfaces/selected'
 import { IItem } from '@/interfaces/item'
 import { IOrder, initialValueOrder } from '@/interfaces/order'
@@ -23,13 +27,15 @@ import { ICreateUser, initialValueCreateUser } from '@/interfaces/user/create'
 import { IAuthUser, initialValueAuthUser } from '@/interfaces/user/auth'
 import { IValidationRule } from '@/interfaces/validationRule'
 import { IActionValidation } from '@/interfaces/actionValidation'
+import { ISliceValidation } from '@/interfaces/sliceValidation'
 
-//Redux
+// Redux
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { manageAccountAccess, openModal, useAccountAccess } from '@/redux/accountAccess/slice'
+
+// Masks
 import { maskCPF } from '@/utils/masks/cpf'
 import { maskPHONE } from '@/utils/masks/phone'
-import { ISliceValidation } from '@/interfaces/sliceValidation'
 
 type TApiData = {
   pizzas: IItem[]
@@ -213,7 +219,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     const regex: RegExp = /[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ '-]/g
 
     const validationRules: IValidationRule = {
-      fullName: (value: string) => value.replace(regex, ''),
+      name: (value: string) => value.replace(regex, ''),
       cpf: (value: string) => maskCPF(value),
       phone: (value: string) => maskPHONE(value),
     }
@@ -229,7 +235,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     }
   }
 
-  const handleCreatingUser = () => {
+  const handleCreatingUser = async (): Promise<void> => {
     const form: HTMLFormElement | null = document.querySelector('form')
     const inputs: NodeListOf<HTMLInputElement> | undefined = form?.querySelectorAll('input')
     const messageRequiredField: string = 'Campo obrigatório!*'
@@ -258,7 +264,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     }
 
     const validationRules: IValidationRule = {
-      fullName: (value: string) => (value.length >= 3 ? '' : 'Nome deve conter no mínimo 3 caracteres'),
+      name: (value: string) => (value.length >= 3 ? '' : 'Nome deve conter no mínimo 3 caracteres'),
       cpf: (value: string) => (value.length >= 14 ? '' : 'CPF Inválido!'),
       phone: (value: string) => (value.length >= 14 ? '' : 'Telefone Inválido!'),
       email: (value: string) => (isEmailValid(value) ? '' : 'Email Inválido!'),
@@ -323,6 +329,23 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     if (inputsInvalid.length != 0) {
       return setRequiredFieldText('Preencha todos os campos obrigatórios!*')
     } else {
+      const now = new Date()
+      const day = now.getDate().toString().padStart(2, '0')
+      const month = (now.getMonth() + 1).toString().padStart(2, '0')
+      const year = now.getFullYear()
+
+      const hours = now.getHours().toString().padStart(2, '0')
+      const minutes = now.getMinutes().toString().padStart(2, '0')
+      const seconds = now.getSeconds().toString().padStart(2, '0')
+
+      const date: string = `${day}/${month}/${year}`
+      const time: string = `${hours}:${minutes}:${seconds}`
+      createUser.dateCreated = date
+      createUser.timeCreated = time
+      const response: Response = await fetchPostCreateUser(createUser)
+      if (response.status === 201) {
+        setCreateUser(initialValueCreateUser)
+      }
       setRequiredFieldText('')
     }
   }

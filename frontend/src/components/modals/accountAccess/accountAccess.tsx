@@ -76,7 +76,7 @@ const ModalAccountAccess = ({
             <div className={styles.btnCloseModal} onClick={() => closeModal(false)}>
               <i className="bi bi-x-circle-fill"></i>
             </div>
-            <form className={styles.form} onSubmit={handleSubmit} method="post">
+            <form className={styles.form} onSubmit={handleSubmit}>
               <span className={styles.text}>Criar conta</span>
               <div className={styles.groupContainer}>
                 <div className={styles.group}>
@@ -86,8 +86,8 @@ const ModalAccountAccess = ({
                     type="text"
                     placeholder="Nome completo"
                     onChange={handleChangeInput}
-                    name="fullName"
-                    value={createUser.fullName}
+                    name="name"
+                    value={createUser.name}
                   />
                 </div>
 

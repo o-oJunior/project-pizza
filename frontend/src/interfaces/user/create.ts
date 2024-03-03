@@ -1,17 +1,21 @@
 export interface ICreateUser {
-  fullName: string
+  name: string
   cpf: string
   email: string
   phone: string
   password: string
   confirmPassword: string
+  dateCreated: string
+  timeCreated: string
 }
 
 export const initialValueCreateUser = {
-  fullName: '',
+  name: '',
   cpf: '',
   email: '',
   phone: '',
   password: '',
   confirmPassword: '',
+  dateCreated: '',
+  timeCreated: '',
 }
