@@ -51,8 +51,10 @@ export class ClientService {
         return checkCPF || checkEmail
       }
       await this.clientRepository.createClient(createClientDto)
+      console.log('Client service ' + createClientDto)
       return { statusCode: 201, message: 'Cliente criado com sucesso!' }
     } catch (error) {
+      console.log('Erro client service ' + error)
       return this.clientRepository.statusCode500
     }
   }
