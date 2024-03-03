@@ -58,10 +58,8 @@ export class ClientRepository extends Database {
         createClientDto.dateCreated,
         createClientDto.timeCreated,
       ]
-      console.log('Client repository ' + createClientDto)
       return await this.client.query(insert, values)
     } catch (error) {
-      console.log('Erro client repository ' + error)
       return this.statusCode500
     } finally {
       this.disconnectDatabase()
