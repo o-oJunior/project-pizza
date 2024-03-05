@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent } from 'react'
 import styles from './accountAccess.module.scss'
 import { IAuthUser } from '@/interfaces/user/auth'
 import { ICreateUser } from '@/interfaces/user/create'
+import { Input } from '@/components/input/input'
 
 type TProps = {
   handleChangeInput: (event: ChangeEvent<HTMLInputElement>) => void
@@ -36,8 +37,7 @@ const ModalAccountAccess = ({
               <span className={styles.text}>Entrar</span>
               <div className={styles.group}>
                 <label className={styles.label}>Usuário</label>
-                <input
-                  className={`${styles.input} valid`}
+                <Input
                   type="text"
                   placeholder="E-mail ou CPF"
                   onChange={handleChangeInput}
@@ -47,8 +47,7 @@ const ModalAccountAccess = ({
               </div>
               <div className={styles.group}>
                 <label className={styles.label}>Senha</label>
-                <input
-                  className={`${styles.input} valid`}
+                <Input
                   type="password"
                   placeholder="Senha"
                   onChange={handleChangeInput}
@@ -81,8 +80,7 @@ const ModalAccountAccess = ({
               <div className={styles.groupContainer}>
                 <div className={styles.group}>
                   <label className={styles.label}>Nome*</label>
-                  <input
-                    className={`${styles.input} valid`}
+                  <Input
                     type="text"
                     placeholder="Nome completo"
                     onChange={handleChangeInput}
@@ -93,8 +91,7 @@ const ModalAccountAccess = ({
 
                 <div className={styles.group}>
                   <label className={styles.label}>CPF*</label>
-                  <input
-                    className={`${styles.input} valid`}
+                  <Input
                     type="text"
                     placeholder="CPF"
                     onChange={handleChangeInput}
@@ -106,8 +103,7 @@ const ModalAccountAccess = ({
 
                 <div className={styles.group}>
                   <label className={styles.label}>E-mail*</label>
-                  <input
-                    className={`${styles.input} valid`}
+                  <Input
                     type="text"
                     placeholder="E-mail"
                     onChange={handleChangeInput}
@@ -118,8 +114,7 @@ const ModalAccountAccess = ({
 
                 <div className={styles.group}>
                   <label className={styles.label}>Telefone*</label>
-                  <input
-                    className={`${styles.input} valid`}
+                  <Input
                     type="text"
                     placeholder="Telefone"
                     onChange={handleChangeInput}
@@ -130,8 +125,7 @@ const ModalAccountAccess = ({
                 </div>
                 <div className={styles.group}>
                   <label className={styles.label}>Senha*</label>
-                  <input
-                    className={`${styles.input} valid`}
+                  <Input
                     type="password"
                     placeholder="Senha"
                     onChange={handleChangeInput}
@@ -142,8 +136,7 @@ const ModalAccountAccess = ({
 
                 <div className={styles.group}>
                   <label className={styles.label}>Confirmar senha*</label>
-                  <input
-                    className={`${styles.input} valid`}
+                  <Input
                     type="password"
                     placeholder="Confirmar senha"
                     onChange={handleChangeInput}
