@@ -207,10 +207,10 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
   }
 
   const handleAccountAccess = (): void => {
-    const value: boolean = accountAccess.hasAccount ? false : true
+    const hasAccount: boolean = accountAccess.hasAccount
     setAuthUser(initialValueAuthUser)
     setCreateUser(initialValueCreateUser)
-    dispatch(manageAccountAccess(value))
+    dispatch(manageAccountAccess(!hasAccount))
   }
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>): void => {
