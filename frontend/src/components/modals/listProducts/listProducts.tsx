@@ -2,7 +2,7 @@ import { IItem } from '@/interfaces/item'
 import styles from './listProducts.module.scss'
 import { ChangeEvent } from 'react'
 
-type TPropsListProducts = {
+type TProps = {
   open: (event: boolean) => void
   search: (text: string) => void
   select: (item: IItem, type: 'flavors') => void
@@ -16,7 +16,7 @@ type TSelected = {
   flavors: IItem[]
 }
 
-const ModalListProducts = ({
+const ModalListProducts: React.FC<TProps> = ({
   items,
   open,
   search,
@@ -24,7 +24,7 @@ const ModalListProducts = ({
   select,
   remove,
   textOfSelectionOfFlavor,
-}: TPropsListProducts) => {
+}) => {
   return (
     <div className={styles.modalContainer}>
       <div className={styles.modalContent}>

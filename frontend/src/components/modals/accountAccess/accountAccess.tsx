@@ -15,7 +15,7 @@ type TProps = {
   requiredFieldText: string
 }
 
-const ModalAccountAccess = ({
+const ModalAccountAccess: React.FC<TProps> = ({
   handleChangeInput,
   closeModal,
   handleAccountAccess,
@@ -24,7 +24,7 @@ const ModalAccountAccess = ({
   createUser,
   hasAccount,
   requiredFieldText,
-}: TProps) => {
+}) => {
   return (
     <>
       {hasAccount ? (
