@@ -36,6 +36,8 @@ import { manageAccountAccess, openModal, useAccountAccess } from '@/redux/accoun
 // Masks
 import { maskCPF } from '@/utils/masks/cpf'
 import { maskPHONE } from '@/utils/masks/phone'
+import { CustomAlert } from '@/components/modals/customAlert/customAlert'
+import { IAlert, initialValueAlert } from '@/interfaces/alert'
 
 type TApiData = {
   pizzas: IItem[]
@@ -82,6 +84,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
   const [createUser, setCreateUser] = useState<ICreateUser>(initialValueCreateUser)
   const [authUser, setAuthUser] = useState<IAuthUser>(initialValueAuthUser)
   const [requiredFieldText, setRequiredFieldText] = useState<string>('')
+  const [alert, setAlert] = useState<IAlert>(initialValueAlert)
   const accountAccess = useAppSelector(useAccountAccess)
   const dispatch = useAppDispatch()
 
@@ -329,24 +332,20 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
     if (inputsInvalid.length != 0) {
       return setRequiredFieldText('Preencha todos os campos obrigatórios!*')
     } else {
-      const now = new Date()
-      const day = now.getDate().toString().padStart(2, '0')
-      const month = (now.getMonth() + 1).toString().padStart(2, '0')
-      const year = now.getFullYear()
-
-      const hours = now.getHours().toString().padStart(2, '0')
-      const minutes = now.getMinutes().toString().padStart(2, '0')
-      const seconds = now.getSeconds().toString().padStart(2, '0')
-
-      const date: string = `${day}/${month}/${year}`
-      const time: string = `${hours}:${minutes}:${seconds}`
+      const date: string = new Date().toLocaleDateString('pt-BR')
+      const time: string = new Date().toLocaleTimeString('pt-BR', { hour12: false })
       createUser.dateCreated = date
       createUser.timeCreated = time
+      setAlert({ message: 'Aguarde! Sua conta está sendo criada.', status: 'await', modal: true })
       const response: Response = await fetchPostCreateUser(createUser)
       if (response.status === 201) {
         setCreateUser(initialValueCreateUser)
+        setAlert({ message: 'Conta criada com sucesso.', status: 'success', modal: true })
+      } else {
+        setAlert({ message: 'Erro ao criar conta.', status: 'error', modal: true })
       }
       setRequiredFieldText('')
+      setTimeout(() => setAlert(initialValueAlert), 2000)
     }
   }
 
@@ -406,6 +405,7 @@ export default function Home({ pizzas, combos, sodas, juices, flavors, borders, 
           requiredFieldText={requiredFieldText}
         />
       )}
+      {alert.modal && <CustomAlert message={alert.message} status={alert.status} />}
     </main>
   )
 }
