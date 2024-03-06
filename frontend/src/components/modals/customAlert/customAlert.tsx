@@ -9,7 +9,7 @@ interface IValidationAlert {
   [key: string]: string
 }
 
-export const CustomAlert: React.FC<ICustomAlert> = ({ status, message }) => {
+const CustomAlert: React.FC<ICustomAlert> = ({ status, message }) => {
   const iconAwait = 'bi-clock'
   const iconSuccess = 'bi-check-circle'
   const iconError = 'bi-x-circle'
@@ -29,3 +29,5 @@ export const CustomAlert: React.FC<ICustomAlert> = ({ status, message }) => {
     </div>
   )
 }
+
+export default CustomAlert

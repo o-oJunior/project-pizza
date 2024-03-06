@@ -18,6 +18,7 @@ import ItemList from '@/components/itemList/itemList'
 import ModalListProducts from '@/components/modals/listProducts/listProducts'
 import ModalFullScreen from '@/components/modals/fullScreen/fullScreen'
 import ModalAccountAccess from '@/components/modals/accountAccess/accountAccess'
+import CustomAlert from '@/components/modals/customAlert/customAlert'
 
 // Interfaces
 import { ISelected, initialValueSelected } from '@/interfaces/selected'
@@ -28,6 +29,7 @@ import { IAuthUser, initialValueAuthUser } from '@/interfaces/user/auth'
 import { IValidationRule } from '@/interfaces/validationRule'
 import { IActionValidation } from '@/interfaces/actionValidation'
 import { ISliceValidation } from '@/interfaces/sliceValidation'
+import { IAlert, initialValueAlert } from '@/interfaces/alert'
 
 // Redux
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -36,8 +38,6 @@ import { manageAccountAccess, openModal, useAccountAccess } from '@/redux/accoun
 // Masks
 import { maskCPF } from '@/utils/masks/cpf'
 import { maskPHONE } from '@/utils/masks/phone'
-import { CustomAlert } from '@/components/modals/customAlert/customAlert'
-import { IAlert, initialValueAlert } from '@/interfaces/alert'
 
 type TApiData = {
   pizzas: IItem[]

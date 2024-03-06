@@ -4,7 +4,7 @@ import styles from './fullScreen.module.scss'
 import { IItem } from '@/interfaces/item'
 import { IData } from '@/interfaces/data'
 
-type TPropsFullScreen = {
+type TProps = {
   openModalFull: (event: boolean) => void
   openModalListProducts: (event: boolean) => void
   select: (item: IItem, type: 'border' | 'bud' | 'soda') => void
@@ -19,7 +19,7 @@ type TPropsFullScreen = {
   textOfSelectionOfFlavor: string
 }
 
-const ModalFullScreen = ({
+const ModalFullScreen: React.FC<TProps> = ({
   openModalFull,
   openModalListProducts,
   select,
@@ -32,7 +32,7 @@ const ModalFullScreen = ({
   quantity,
   type,
   textOfSelectionOfFlavor,
-}: TPropsFullScreen) => {
+}) => {
   const filterSodas = data.sodas.filter((soda) => Object(soda.liter) >= 1)
   const filterCanSodas = data.sodas.filter((soda) => soda.name.includes('Lata'))
 
