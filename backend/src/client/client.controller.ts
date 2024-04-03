@@ -50,8 +50,16 @@ export class ClientController {
     const expires = 1000 * 60 * 60 * 24 * 30
     const token = results.token
     delete results.token
+    let origin = req.get('Origin')
+    if (!origin) {
+      const requered = res.get('Requered')
+      if (requered) {
+        const url = new URL(requered)
+        origin = url.origin
+      }
+    }
 
-    const origin = req.get('Origin')
+    console.log(origin)
 
     if (token) {
       res
