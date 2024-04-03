@@ -53,12 +53,15 @@ export class ClientController {
     const origin = req.get('Origin')
     const urlOrigin = new URL(origin)
 
+    console.log(origin)
+
     if (token) {
       res
         .cookie('token', token, {
           httpOnly: true,
           maxAge: expires,
           domain: urlOrigin.hostname,
+          sameSite: 'none',
         })
         .json(results)
     } else {
