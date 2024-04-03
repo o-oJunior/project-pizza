@@ -61,7 +61,6 @@ export class ClientService {
         return { statusCode: 200, data: decoded }
       }
     } catch (error) {
-      console.log(error)
       return { statusCode: 401, message: 'Token inválido!' }
     }
   }
@@ -101,7 +100,6 @@ export class ClientService {
         return { statusCode: 401, message: 'Senha incorreta!' }
       }
     } catch (error) {
-      console.log(error)
       return this.clientRepository.statusCode500
     }
   }

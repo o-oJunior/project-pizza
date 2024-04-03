@@ -36,7 +36,11 @@ export class ClientController {
   }
 
   @Post('auth')
-  async authClient(@Body() authClientDto: AuthClientDto, @Res({ passthrough: true }) res: Response) {
+  async authClient(
+    @Body() authClientDto: AuthClientDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ) {
     type TResults = {
       statusCode?: number
       data?: object
@@ -48,7 +52,13 @@ export class ClientController {
     delete results.token
 
     if (token) {
-      res.cookie('token', token, { httpOnly: true, maxAge: expires }).json(results)
+      res
+        .cookie('token', token, {
+          httpOnly: true,
+          maxAge: expires,
+          domain: req.headers.host,
+        })
+        .json(results)
     } else {
       res.json(results)
     }
