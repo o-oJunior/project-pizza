@@ -51,12 +51,14 @@ export class ClientController {
     const token = results.token
     delete results.token
 
+    const origin = req.get('Origin')
+
     if (token) {
       res
         .cookie('token', token, {
           httpOnly: true,
           maxAge: expires,
-          domain: req.headers.host,
+          domain: origin,
         })
         .json(results)
     } else {
