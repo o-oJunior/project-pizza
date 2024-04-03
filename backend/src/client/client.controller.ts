@@ -50,17 +50,12 @@ export class ClientController {
     const expires = 1000 * 60 * 60 * 24 * 30
     const token = results.token
     delete results.token
-    const origin = req.get('Origin')
-    const urlOrigin = new URL(origin)
-
-    console.log(origin)
 
     if (token) {
       res
         .cookie('token', token, {
           httpOnly: true,
           maxAge: expires,
-          domain: urlOrigin.hostname,
           sameSite: 'none',
         })
         .json(results)
