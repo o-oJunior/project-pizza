@@ -56,7 +56,6 @@ export class ClientController {
         .cookie('token', token, {
           httpOnly: true,
           maxAge: expires,
-          sameSite: 'lax',
         })
         .json(results)
     } else {
