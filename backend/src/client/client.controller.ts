@@ -23,8 +23,10 @@ export class ClientController {
   @Get('logout')
   logout(@Res() res: Response) {
     res.cookie('token', {
-      httpOnly: true,
       expires: new Date(0),
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
     })
 
     res.json({ statusCode: 200, message: 'Usuário desconectado com sucesso!' })
