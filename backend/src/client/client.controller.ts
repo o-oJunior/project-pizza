@@ -22,14 +22,15 @@ export class ClientController {
 
   @Get('logout')
   logout(@Res() res: Response) {
-    res.cookie('token', {
-      expires: new Date(0),
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-    })
-
-    res.json({ statusCode: 200, message: 'Usuário desconectado com sucesso!' })
+    res
+      .cookie('token', {
+        httpOnly: true,
+        maxAge: 0,
+        sameSite: 'none',
+        secure: true,
+      })
+      .status(200)
+      .json({ statusCode: 200, message: 'Usuário desconectado com sucesso!' })
   }
 
   @Post('create')
@@ -38,11 +39,7 @@ export class ClientController {
   }
 
   @Post('auth')
-  async authClient(
-    @Body() authClientDto: AuthClientDto,
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response
-  ) {
+  async authClient(@Body() authClientDto: AuthClientDto, @Res({ passthrough: true }) res: Response) {
     type TResults = {
       statusCode?: number
       data?: object
