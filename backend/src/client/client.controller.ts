@@ -57,10 +57,12 @@ export class ClientController {
           httpOnly: true,
           maxAge: expires,
           sameSite: 'none',
+          secure: false,
         })
+        .status(200)
         .json(results)
     } else {
-      res.json(results)
+      res.status(401).json(results)
     }
   }
 
