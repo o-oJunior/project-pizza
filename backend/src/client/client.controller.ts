@@ -23,7 +23,7 @@ export class ClientController {
   @Get('logout')
   logout(@Res() res: Response) {
     res
-      .cookie('token', {
+      .cookie('token', '', {
         httpOnly: true,
         maxAge: 0,
         sameSite: 'none',
