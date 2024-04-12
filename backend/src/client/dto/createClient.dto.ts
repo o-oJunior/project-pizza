@@ -4,7 +4,12 @@ export class CreateClientDto {
   @IsString()
   @Length(3)
   @IsNotEmpty()
-  name: string
+  firstName: string
+
+  @IsString()
+  @Length(3)
+  @IsNotEmpty()
+  lastName: string
 
   @IsString()
   @Length(14)
@@ -33,6 +38,11 @@ export class CreateClientDto {
   @IsNotEmpty()
   @Length(8)
   timeCreated: string
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(10)
+  birthDate: string
 
   hashPassword: string
 }

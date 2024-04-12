@@ -47,16 +47,18 @@ export class ClientRepository extends Database {
     this.connectDatabase()
     try {
       const insert: string = `INSERT INTO 
-      client(name, cpf, phone, email, hashPassword, dateCreated, timeCreated) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7)`
+      client(firstName, lastName, cpf, phone, email, hashPassword, dateCreated, timeCreated, birthDate) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
       const values: string[] = [
-        createClientDto.name,
+        createClientDto.firstName,
+        createClientDto.lastName,
         createClientDto.cpf,
         createClientDto.phone,
         createClientDto.email,
         createClientDto.hashPassword,
         createClientDto.dateCreated,
         createClientDto.timeCreated,
+        createClientDto.birthDate,
       ]
       return await this.client.query(insert, values)
     } catch (error) {

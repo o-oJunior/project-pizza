@@ -17,13 +17,18 @@ export class ClientService {
       const response = await this.clientRepository.getClientByID(id)
       const values = Object.values(response)
       const clientFormated = values.map((value) => {
-        value.hashPassword = value.hashpassword
-        value.dateCreated = value.datecreated
-        value.timeCreated = value.timecreated
-        delete value.hashpassword
-        delete value.datecreated
-        delete value.timecreated
-        return value
+        const newValue = {
+          id: value.id,
+          firstName: value.firstname,
+          lastName: value.lastname,
+          cpf: value.cpf,
+          phone: value.phone,
+          email: value.email,
+          dateCreated: value.datecreated,
+          timeCreated: value.timecreated,
+          birthDate: value.birthdate,
+        }
+        return newValue
       })
       if (!clientFormated) {
         return { statusCode: 404, error: 'Usuário não foi encontrado!' }
@@ -85,12 +90,18 @@ export class ClientService {
       if (passwordIsValid) {
         const data = await this.clientRepository.getClientByID(clientUser.id)
         const dataFormated = Object.values(data).map((value) => {
-          value.dateCreated = value.datecreated
-          value.timeCreated = value.timecreated
-          delete value.hashpassword
-          delete value.datecreated
-          delete value.timecreated
-          return value
+          const newValue = {
+            id: value.id,
+            firstName: value.firstname,
+            lastName: value.lastname,
+            cpf: value.cpf,
+            phone: value.phone,
+            email: value.email,
+            dateCreated: value.datecreated,
+            timeCreated: value.timecreated,
+            birthDate: value.birthdate,
+          }
+          return newValue
         })
         const response: IClient = Object.values(dataFormated).find((user) => user)
         const privateKey = process.env.PRIVATE_KEY
@@ -109,7 +120,11 @@ export class ClientService {
       const results = await this.clientRepository.getClientByID(id)
       const keys = Object.keys(updateClientDto)
       keys.forEach((key) =>
-        key === 'name' || key === 'phone' || key === 'email' || key === 'hashPassword'
+        key === 'firsName' ||
+        key === 'lastName' ||
+        key === 'phone' ||
+        key === 'email' ||
+        key === 'hashPassword'
           ? key
           : delete updateClientDto[key]
       )
