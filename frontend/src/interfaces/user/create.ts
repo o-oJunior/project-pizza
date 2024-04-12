@@ -1,5 +1,6 @@
 export interface ICreateUser {
-  name: string
+  firstName: string
+  lastName: string
   cpf: string
   email: string
   phone: string
@@ -7,10 +8,12 @@ export interface ICreateUser {
   confirmPassword: string
   dateCreated: string
   timeCreated: string
+  birthDate: string
 }
 
 export const initialValueCreateUser = {
-  name: '',
+  firstName: '',
+  lastName: '',
   cpf: '',
   email: '',
   phone: '',
@@ -18,4 +21,5 @@ export const initialValueCreateUser = {
   confirmPassword: '',
   dateCreated: '',
   timeCreated: '',
+  birthDate: '',
 }
