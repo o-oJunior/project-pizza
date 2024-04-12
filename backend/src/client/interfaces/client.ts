@@ -1,10 +1,12 @@
 export interface IClient {
   id: number
-  name: string
+  firstName: string
+  lastName: string
   cpf: string
   phone: string
   email: string
-  hashpassword: string
   dateCreated: string
   timeCreated: string
+  birthDate: string
+  hashpassword?: string
 }
