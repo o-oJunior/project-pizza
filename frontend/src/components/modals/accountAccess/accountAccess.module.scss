@@ -35,31 +35,36 @@
     cursor: pointer;
   }
 
-  .groupContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-    gap: 20px;
-  }
-
   .form {
     display: flex;
     justify-content: center;
     flex: 1;
     flex-direction: column;
     margin: 40px;
-    padding: 20px;
     border: 1px solid #c9c9c9;
     gap: 20px;
+    padding: 20px;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
-  .form::-webkit-scrollbar {
+  .groupContainer {
+    display: grid;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 600px;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 20px;
+    padding: 0 10px;
+  }
+
+  .groupContainer::-webkit-scrollbar {
     width: 4px;
     background-color: #c9c9c9;
   }
 
-  .form::-webkit-scrollbar-thumb {
+  .groupContainer::-webkit-scrollbar-thumb {
     background-color: #686868;
   }
 
@@ -92,19 +97,19 @@
   }
 
   .buttonSignIn {
-    background-color: #009246;
+    background-color: #202020;
   }
 
   .buttonSignIn:hover {
-    background-color: #03aa54;
+    background-color: #404040;
   }
 
   .buttonSignUp {
-    background-color: #ce2b37;
+    background-color: #808080;
   }
 
   .buttonSignUp:hover {
-    background-color: #e02733;
+    background-color: #8d8c8c;
   }
 
   .link {
@@ -126,8 +131,12 @@
     text-align: center;
   }
 
-  .requiredFieldText {
+  .errorMessage {
+    text-align: center;
     font-size: 12px;
     color: #ce2b37;
+    padding: 10px;
+    width: 100%;
+    background-color: rgba(208, 2, 27, 0.1);
   }
 }
