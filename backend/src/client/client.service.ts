@@ -24,9 +24,10 @@ export class ClientService {
           cpf: value.cpf,
           phone: value.phone,
           email: value.email,
+          birthDate: value.birthdate,
+          isAdmin: value.isadmin,
           dateCreated: value.datecreated,
           timeCreated: value.timecreated,
-          birthDate: value.birthdate,
         }
         return newValue
       })
@@ -97,9 +98,10 @@ export class ClientService {
             cpf: value.cpf,
             phone: value.phone,
             email: value.email,
+            birthDate: value.birthdate,
+            isAdmin: value.isadmin,
             dateCreated: value.datecreated,
             timeCreated: value.timecreated,
-            birthDate: value.birthdate,
           }
           return newValue
         })

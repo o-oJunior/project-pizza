@@ -8,5 +8,6 @@ export interface IClient {
   dateCreated: string
   timeCreated: string
   birthDate: string
+  isAdmin: boolean
   hashpassword?: string
 }

@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator'
+import { IsBoolean, IsEmail, IsNotEmpty, IsString, Length } from 'class-validator'
 
 export class CreateClientDto {
   @IsString()
@@ -43,6 +43,10 @@ export class CreateClientDto {
   @IsNotEmpty()
   @Length(10)
   birthDate: string
+
+  @IsBoolean()
+  @IsNotEmpty()
+  isAdmin: boolean
 
   hashPassword: string
 }
